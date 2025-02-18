@@ -5,22 +5,28 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
-  const isPublicPath = path === '/login' || 
-                      path === '/signup' || 
-                      path === '/verifyemail' ||
-                      path === '/forgotpassword' ||
-                      path === '/resetpassword'
+  // Разделяме публичните пътища на две категории
+  const isAuthPath = path === '/login' || 
+                    path === '/signup' || 
+                    path === '/verifyemail' ||
+                    path === '/forgotpassword' ||
+                    path === '/resetpassword'
+
+  const isPublicPath = path === '/' ||
+                      path === '/rooms' ||
+                      path.startsWith('/rooms/')
 
   const token = request.cookies.get('token')?.value || ''
 
-  if(isPublicPath && token) {
+  // Само за auth пътищата пренасочваме към началната страница ако има токен
+  if(isAuthPath && token) {
     return NextResponse.redirect(new URL('/', request.nextUrl))
   }
 
-  if (!isPublicPath && !token) {
+  // За всички непублични пътища изискваме токен
+  if (!isAuthPath && !isPublicPath && !token) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
   }
-    
 }
 
  
@@ -35,6 +41,8 @@ export const config = {
     '/users',
     '/profile/:path*',
     '/forgotpassword',
-    '/resetpassword'
+    '/resetpassword',
+    '/rooms',
+    '/rooms/:path*'
   ]
 }
