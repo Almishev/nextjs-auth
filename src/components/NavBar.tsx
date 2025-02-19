@@ -4,7 +4,16 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
-export default function NavBar() {
+interface UserData {
+  id: string;
+  isAdmin: boolean;
+}
+
+interface NavBarProps {
+  userData: UserData;
+}
+
+export default function NavBar({ userData }: NavBarProps) {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -52,8 +61,18 @@ export default function NavBar() {
           <Link href="/" className={isActive('/')} onClick={handleLinkClick}>Home</Link>
           <Link href="/rooms" className={isActive('/rooms')} onClick={handleLinkClick}>Rooms</Link>
           <Link href="/about" className={isActive('/about')} onClick={handleLinkClick}>About</Link>
-          <Link href="/login" className={isActive('/login')} onClick={handleLinkClick}>Login</Link>
-          <Link href="/signup" className={isActive('/signup')} onClick={handleLinkClick}>Sign Up</Link>
+          {userData.id ? (
+            <>
+              {userData.isAdmin && <Link href="/admin" className={isActive('/admin')} onClick={handleLinkClick}>Admin</Link>}
+              <Link href="/profile" className={isActive('/profile')} onClick={handleLinkClick}>Profile</Link>
+              <Link href="/api/users/logout" className={isActive('/logout')} onClick={handleLinkClick}>Logout</Link>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className={isActive('/login')} onClick={handleLinkClick}>Login</Link>
+              <Link href="/signup" className={isActive('/signup')} onClick={handleLinkClick}>Sign Up</Link>
+            </>
+          )}
           <Link 
             href="/booking" 
             className={`${isActive('/booking')}`}

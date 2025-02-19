@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import { headers } from 'next/headers'
 import { getUserData } from '@/lib/auth'
-import Navbar from '@/components/NavBar'
+import NavBar from '@/components/NavBar'
 import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar userData={userData} />
+        <NavBar userData={userData} />
         <main className="main-content">
           {children}
         </main>

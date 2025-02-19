@@ -3,7 +3,12 @@ import User from "@/models/userModel";
 import { headers } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 
-export async function getUserData() {
+interface UserData {
+  id: string;
+  isAdmin: boolean;
+}
+
+export async function getUserData(): Promise<UserData> {
     try {
         const headersList = headers();
         const token = headersList.get('token');
