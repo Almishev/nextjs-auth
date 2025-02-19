@@ -6,6 +6,11 @@ export async function connect() {
             throw new Error('MONGO_URI is not defined in environment variables');
         }
 
+        // Validate MongoDB URI format
+        if (!process.env.MONGO_URI.startsWith('mongodb://') && !process.env.MONGO_URI.startsWith('mongodb+srv://')) {
+            throw new Error('Invalid MongoDB URI format. Must start with mongodb:// or mongodb+srv://');
+        }
+
         if (mongoose.connection.readyState === 1) {
             return mongoose.connection;
         }

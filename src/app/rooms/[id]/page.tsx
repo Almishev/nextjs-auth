@@ -5,9 +5,14 @@ import type { Room } from '@/types/room'
 
 async function getRooms() {
   try {
-    const res = await fetch('/api/rooms', {
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}` 
+      : 'http://localhost:3000';
+      
+    const res = await fetch(`${baseUrl}/api/rooms`, {
       next: { revalidate: 3600 }
     });
+    
     if (!res.ok) throw new Error('Failed to fetch rooms');
     const data = await res.json();
     return data.rooms as Room[];
