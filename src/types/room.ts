@@ -10,5 +10,4 @@ export interface Room {
   image: string;
   amenities: string[];
   features: string[];
-  isAvailable: boolean;
 } 

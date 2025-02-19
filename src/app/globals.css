@@ -299,14 +299,9 @@ body {
 
 /* Navigation */
 .navbar {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   padding: 1rem 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
 }
 
 .nav-content {
@@ -320,8 +315,8 @@ body {
 
 .nav-logo {
   font-size: 1.5rem;
-  font-weight: 600;
-  color: #667eea;
+  font-weight: bold;
+  color: #0ea5e9;
   text-decoration: none;
 }
 
@@ -330,15 +325,15 @@ body {
   gap: 1.5rem;
 }
 
-.nav-link {
-  color: #4a5568;
+.nav-links a {
+  color: #1e293b;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
-.nav-link:hover {
-  color: #667eea;
+.nav-links a:hover {
+  color: #0ea5e9;
 }
 
 .nav-link.active {
@@ -367,11 +362,10 @@ body {
 
 /* Footer */
 .footer {
-  background-color: #efeaea;
-  color: rgb(21, 21, 21);
-  padding: 1.5rem 0;
+  background: #1e293b;
+  color: white;
+  padding: 2rem 0;
   margin-top: auto;
-
 }
 
 .footer-content {

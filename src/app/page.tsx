@@ -1,16 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Room } from '@/types/room'
-
-async function getRooms() {
-  const res = await fetch('http://localhost:3000/api/rooms', { cache: 'no-store' });
-  const data = await res.json();
-  return data.rooms as Room[];
-}
+import { getRooms } from '@/lib/rooms'
 
 export default async function Home() {
   const rooms = await getRooms();
-  const featuredRooms = rooms.slice(0,2);
 
   return (
     <div className="home-container">
@@ -26,10 +20,10 @@ export default async function Home() {
       </section>
 
       {/* Featured Rooms */}
-      <section className="featured-section">
+      <section className="max-w-6xl mx-auto px-4 py-16">
         <h2 className="section-title">Featured Rooms</h2>
         <div className="featured-rooms">
-          {featuredRooms.map((room) => (
+          {rooms.slice(0, 3).map((room) => (
             <div key={room._id} className="featured-room">
               <div className="room-image-container">
                 <Image

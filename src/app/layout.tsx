@@ -1,6 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import NavBar from '@/components/NavBar'
+import { Toaster } from 'react-hot-toast'
+import { headers } from 'next/headers'
+import { getUserData } from '@/lib/auth'
+import Navbar from '@/components/NavBar'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -9,23 +13,22 @@ export const metadata = {
   description: 'Luxury hotel booking system',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const userData = await getUserData();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
+        <Navbar userData={userData} />
         <main className="main-content">
           {children}
         </main>
-        <footer className="footer">
-          <div className="footer-content">
-            <p>&copy; {new Date().getFullYear()} Luxury Stay. All rights reserved.</p>
-          </div>
-        </footer>
+        <Footer />
+        <Toaster position="bottom-right" />
       </body>
     </html>
   )
