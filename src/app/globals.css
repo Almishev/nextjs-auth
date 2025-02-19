@@ -325,30 +325,25 @@ body {
   gap: 1.5rem;
 }
 
-.nav-links a {
+.nav-link {
   color: #1e293b;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
 }
 
-.nav-links a:hover {
+.nav-link:hover {
   color: #0ea5e9;
 }
 
 .nav-link.active {
-  color: #667eea;
-  position: relative;
-}
-
-.nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #667eea;
+  color: #0ea5e9;
+  font-weight: 600;
 }
 
 /* Main Content */

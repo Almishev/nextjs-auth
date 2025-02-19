@@ -1,6 +1,6 @@
 import { connect } from "@/dbConfig/dbConfig";
 import User from "@/models/userModel";
-import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { verify } from 'jsonwebtoken';
 
 interface UserData {
@@ -10,8 +10,8 @@ interface UserData {
 
 export async function getUserData(): Promise<UserData> {
     try {
-        const headersList = headers();
-        const token = headersList.get('token');
+        const cookieStore = cookies();
+        const token = cookieStore.get('token')?.value;
 
         if (!token) {
             return { id: '', isAdmin: false };

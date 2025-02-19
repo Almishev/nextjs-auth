@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
@@ -13,24 +13,22 @@ interface NavBarProps {
   userData: UserData;
 }
 
-export default function NavBar({ userData }: NavBarProps) {
+export default function NavBar({ userData: initialUserData }: NavBarProps) {
   const pathname = usePathname()
+  const router = useRouter()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [userData, setUserData] = useState(initialUserData)
 
-  useEffect(() => {
-    setIsMenuOpen(false)
-  }, [pathname])
-
-  const isActive = (path: string) => {
-    return pathname === path ? 'nav-link active' : 'nav-link'
-  }
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
-
-  const handleLinkClick = () => {
-    setIsMenuOpen(false)
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/users/logout')
+      if (response.ok) {
+        setUserData({ id: '', isAdmin: false })
+        router.push('/login')
+      }
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
 
   return (
@@ -44,12 +42,12 @@ export default function NavBar({ userData }: NavBarProps) {
             height={40}
             className="rounded-full"
           />
-          <Link href="/" className="nav-logo" onClick={handleLinkClick}>
+          <Link href="/" className="nav-logo" onClick={() => setIsMenuOpen(false)}>
             Luxury Stay
           </Link>
         </div>
 
-        <button className="mobile-menu-button" onClick={toggleMenu}>
+        <button className="mobile-menu-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span className={`hamburger ${isMenuOpen ? 'open' : ''}`}>
             <span></span>
             <span></span>
@@ -58,25 +56,48 @@ export default function NavBar({ userData }: NavBarProps) {
         </button>
 
         <div className={`nav-links ${isMenuOpen ? 'show' : ''}`}>
-          <Link href="/" className={isActive('/')} onClick={handleLinkClick}>Home</Link>
-          <Link href="/rooms" className={isActive('/rooms')} onClick={handleLinkClick}>Rooms</Link>
-          <Link href="/about" className={isActive('/about')} onClick={handleLinkClick}>About</Link>
+          <Link href="/" className={isActive('/')} onClick={() => setIsMenuOpen(false)}>
+            Home
+          </Link>
+          <Link href="/rooms" className={isActive('/rooms')} onClick={() => setIsMenuOpen(false)}>
+            Rooms
+          </Link>
+          <Link href="/about" className={isActive('/about')} onClick={() => setIsMenuOpen(false)}>
+            About
+          </Link>
+          
           {userData.id ? (
             <>
-              {userData.isAdmin && <Link href="/admin" className={isActive('/admin')} onClick={handleLinkClick}>Admin</Link>}
-              <Link href="/profile" className={isActive('/profile')} onClick={handleLinkClick}>Profile</Link>
-              <Link href="/api/users/logout" className={isActive('/logout')} onClick={handleLinkClick}>Logout</Link>
+              <Link href="/profile" className={isActive('/profile')} onClick={() => setIsMenuOpen(false)}>
+                Profile
+              </Link>
+              {userData.isAdmin && (
+                <Link href="/users" className={isActive('/users')} onClick={() => setIsMenuOpen(false)}>
+                  Users
+                </Link>
+              )}
+              <button 
+                onClick={handleLogout}
+                className="nav-link"
+              >
+                Log Out
+              </button>
             </>
           ) : (
             <>
-              <Link href="/login" className={isActive('/login')} onClick={handleLinkClick}>Login</Link>
-              <Link href="/signup" className={isActive('/signup')} onClick={handleLinkClick}>Sign Up</Link>
+              <Link href="/login" className={isActive('/login')} onClick={() => setIsMenuOpen(false)}>
+                Login
+              </Link>
+              <Link href="/signup" className={isActive('/signup')} onClick={() => setIsMenuOpen(false)}>
+                Sign Up
+              </Link>
             </>
           )}
+
           <Link 
             href="/booking" 
-            className={`${isActive('/booking')}`}
-            onClick={handleLinkClick}
+            className={isActive('/booking')}
+            onClick={() => setIsMenuOpen(false)}
           >
             Book Now
           </Link>
@@ -84,4 +105,8 @@ export default function NavBar({ userData }: NavBarProps) {
       </div>
     </nav>
   )
+
+  function isActive(path: string) {
+    return pathname === path ? 'nav-link active' : 'nav-link'
+  }
 } 

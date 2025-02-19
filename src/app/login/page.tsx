@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, {useEffect} from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -22,8 +23,8 @@ export default function LoginPage() {
             const response = await axios.post("/api/users/login", user);
             
             if (response.data.success) {
-                router.push("/profile");
-                router.refresh();
+                toast.success("Login successful");
+                window.location.href = "/"; // Форсираме пълно презареждане
             }
         } catch (error: any) {
             console.log("Login error:", {
@@ -33,6 +34,7 @@ export default function LoginPage() {
             });
             
             setError(error.response?.data?.error || "Something went wrong!");
+            toast.error(error.response?.data?.error || "Something went wrong!");
         } finally {
             setLoading(false);
         }
