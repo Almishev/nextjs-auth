@@ -1,19 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Room } from '@/types/room'
-import { fetchApi } from '@/lib/api'
-
-async function getRooms() {
-  try {
-    const data = await fetchApi('/api/rooms', {
-      next: { revalidate: 3600 }
-    });
-    return data.rooms as Room[];
-  } catch (error) {
-    console.error('Error fetching rooms:', error);
-    return [];
-  }
-}
+import { getRooms } from '@/lib/rooms'
 
 export default async function Rooms() {
   const rooms = await getRooms();

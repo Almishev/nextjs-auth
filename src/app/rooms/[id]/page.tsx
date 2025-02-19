@@ -2,24 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Room } from '@/types/room'
-import { fetchApi } from '@/lib/api'
-
-async function getRooms() {
-  try {
-    const data = await fetchApi('/api/rooms', {
-      next: { revalidate: 3600 }
-    });
-    return data.rooms as Room[];
-  } catch (error) {
-    console.error('Error fetching rooms:', error);
-    return [];
-  }
-}
-
-async function getRoom(id: string) {
-  const rooms = await getRooms();
-  return rooms.find((room) => room.type === id);
-}
+import { getRooms, getRoomByType } from '@/lib/rooms'
 
 export async function generateStaticParams() {
   const rooms = await getRooms();
@@ -29,7 +12,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const room = await getRoom(params.id);
+  const room = await getRoomByType(params.id);
   
   if (!room) {
     return {
@@ -45,11 +28,8 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function RoomPage({ params }: { params: { id: string } }) {
-  const room = await getRoom(params.id);
-
-  if (!room) {
-    notFound();
-  }
+  const room = await getRoomByType(params.id);
+  if (!room) return notFound();
 
   return (
     <div style={{ background: '#f8fafc' }}>
