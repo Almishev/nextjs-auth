@@ -2,23 +2,19 @@ import mongoose from 'mongoose';
 
 export async function connect() {
     try {
-        mongoose.connect(process.env.MONGO_URI!);
-        const connection = mongoose.connection;
+        if (!process.env.MONGO_URI) {
+            throw new Error('MONGO_URI is not defined in environment variables');
+        }
 
-        connection.on('connected', () => {
-            console.log('MongoDB connected successfully');
-        })
+        if (mongoose.connection.readyState === 1) {
+            return mongoose.connection;
+        }
 
-        connection.on('error', (err) => {
-            console.log('MongoDB connection error. Please make sure MongoDB is running. ' + err);
-            process.exit();
-        })
-
+        const conn = await mongoose.connect(process.env.MONGO_URI);
+        console.log("MongoDB connected successfully");
+        return conn;
     } catch (error) {
-        console.log('Something goes wrong!');
-        console.log(error);
-        
+        console.error("MongoDB connection error:", error);
+        throw error;
     }
-
-
 }

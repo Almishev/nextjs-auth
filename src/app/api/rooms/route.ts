@@ -125,6 +125,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
     try {
+        await connect();
         const rooms = await Room.find({});
         return NextResponse.json({
             message: "Rooms fetched successfully",
@@ -132,6 +133,10 @@ export async function GET() {
             rooms
         });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error("API error:", error);
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        );
     }
 } 
