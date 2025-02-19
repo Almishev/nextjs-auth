@@ -7,7 +7,7 @@ export default function NotFound() {
         <h1 className="title">404 - Page Not Found</h1>
         
         <p className="error-message">
-          The page you're looking for doesn't exist or has been moved.
+          We can&apos;t find the page you&apos;re looking for.
         </p>
 
         <div style={{ marginTop: '2rem' }}>

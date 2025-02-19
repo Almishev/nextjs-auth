@@ -37,7 +37,7 @@ export default function UserProfile({ params }: any) {
         };
 
         getUserDetails();
-    }, []);
+    }, [router]);
 
     return (
         <div className="center">

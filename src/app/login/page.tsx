@@ -95,7 +95,7 @@ export default function LoginPage() {
                 </button>
 
                 <Link href="/signup" className="link">
-                    Don't have an account? Sign up
+                    Don&apos;t have an account? Sign up
                 </Link>
                 <Link href="/forgotpassword" className="link">
                     Forgot your password?
