@@ -1,9 +1,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Room } from '@/types/room'
+import { getBaseUrl } from '@/lib/api'
 
 async function getRooms() {
-  const res = await fetch('http://localhost:3000/api/rooms', { cache: 'no-store' });
+  const res = await fetch(`${getBaseUrl()}/api/rooms`, {
+    next: { revalidate: 3600 },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  
+  if (!res.ok) throw new Error('Failed to fetch rooms');
   const data = await res.json();
   return data.rooms as Room[];
 }

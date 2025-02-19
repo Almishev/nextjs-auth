@@ -127,16 +127,22 @@ export async function GET() {
     try {
         await connect();
         const rooms = await Room.find({});
-        return NextResponse.json({
+        
+        return new NextResponse(JSON.stringify({
             message: "Rooms fetched successfully",
             success: true,
             rooms
+        }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     } catch (error: any) {
         console.error("API error:", error);
-        return NextResponse.json(
-            { error: "Internal Server Error" },
-            { status: 500 }
+        return new NextResponse(
+            JSON.stringify({ error: "Internal Server Error" }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
         );
     }
 } 

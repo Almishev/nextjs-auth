@@ -2,15 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Room } from '@/types/room'
+import { getBaseUrl } from '@/lib/api'
 
 async function getRooms() {
   try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'http://localhost:3000';
-      
-    const res = await fetch(`${baseUrl}/api/rooms`, {
-      next: { revalidate: 3600 }
+    const res = await fetch(`${getBaseUrl()}/api/rooms`, {
+      next: { revalidate: 3600 },
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
     
     if (!res.ok) throw new Error('Failed to fetch rooms');
