@@ -3,6 +3,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,8 +28,22 @@ export default function RootLayout({
       <body className={inter.className}>
         <nav className="navbar">
           <div className="nav-content">
+               <Image
+
+src="/images/hotel-logo.jpg"
+
+alt="Hotel Logo"
+
+width={40}
+
+height={40}
+
+className="rounded-full"
+
+/>
             <Link href="/" className="nav-logo">
               AuthSystem
+           
             </Link>
             <div className="nav-links">
             <Link href="/" className={isActive('/')}>Home</Link>
