@@ -171,7 +171,7 @@ export default async function RoomPage({ params }: { params: { id: string } }) {
             </div>
 
             <Link 
-              href="/login" 
+              href="/booking" 
               style={{
                 display: 'inline-block',
                 width: '100%',

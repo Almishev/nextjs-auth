@@ -1,0 +1,169 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.calendar {
+  padding: 20px;
+  border: 2px solid gray;
+  cursor: pointer;
+}
+
+.dateRange {
+  position: absolute;
+  top: 120px;
+}
+
+.date-range-container {
+  width: 100%;
+  background: #ffffff;  /* Бял фон */
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date-range-calendar {
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Calendar Customization */
+.rdrCalendarWrapper {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: transparent;
+  color: #1e293b;  /* Тъмен текст */
+  width: 100%;
+}
+
+/* Хедър с избраните дати */
+.rdrDateDisplayWrapper {
+  background: #f8fafc;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.rdrDateDisplay {
+  margin: 0.5rem;
+}
+
+.rdrDateDisplayItem {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.rdrDateDisplayItem input {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Месец и година */
+.rdrMonthAndYearWrapper {
+  padding-top: 0.5rem;
+  color: #1e293b;
+}
+
+.rdrMonthAndYearPickers select {
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.rdrMonthAndYearPickers select:hover {
+  background: #f8fafc;
+}
+
+/* Дни от седмицата */
+.rdrWeekDay {
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Дни */
+.rdrDay {
+  color: #1e293b;
+}
+
+.rdrDayNumber span {
+  color: #1e293b;
+}
+
+.rdrDayDisabled .rdrDayNumber span {
+  color: #cbd5e1;
+}
+
+/* Избрани дати */
+.rdrDayToday .rdrDayNumber span:after {
+  background: #667eea;
+}
+
+.rdrSelected, 
+.rdrInRange, 
+.rdrStartEdge, 
+.rdrEndEdge {
+  background: #667eea !important;
+}
+
+.rdrInRange {
+  background: rgba(102, 126, 234, 0.2) !important;
+}
+
+.rdrStartEdge, 
+.rdrEndEdge {
+  background: #667eea !important;
+  color: #ffffff !important;
+}
+
+.rdrDayStartPreview, 
+.rdrDayInPreview, 
+.rdrDayEndPreview {
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+/* Навигационни бутони */
+.rdrNextPrevButton {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.rdrNextPrevButton:hover {
+  background: #f1f5f9;
+}
+
+.rdrPprevButton i {
+  border-color: transparent #1e293b transparent transparent;
+}
+
+.rdrNextButton i {
+  border-color: transparent transparent transparent #1e293b;
+}
+
+/* Responsive дизайн */
+@media (max-width: 768px) {
+  .date-range-container {
+    padding: 0.5rem;
+  }
+  
+  .rdrCalendarWrapper {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rdrCalendarWrapper {
+    font-size: 13px;
+  }
+  
+  .rdrDay {
+    height: 30px;
+  }
+} 

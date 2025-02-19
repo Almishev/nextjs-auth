@@ -13,12 +13,14 @@ export function middleware(request: NextRequest) {
                     path === '/resetpassword'
 
   const isPublicPath = path === '/' ||
-                      path === '/rooms' ||
-                      path.startsWith('/rooms/')
+                    path === '/rooms' ||
+                    path === '/about' ||
+                    path === '/booking' ||
+                    path.startsWith('/rooms/')
 
   const token = request.cookies.get('token')?.value || ''
 
-  // Само за auth пътищата пренасочваме към началната страница ако има токен
+  
   if(isAuthPath && token) {
     return NextResponse.redirect(new URL('/', request.nextUrl))
   }
@@ -43,6 +45,8 @@ export const config = {
     '/forgotpassword',
     '/resetpassword',
     '/rooms',
+    '/about',
+    '/booking',
     '/rooms/:path*'
   ]
 }

@@ -114,7 +114,7 @@ export default async function Home() {
         <div className="cta-content">
           <h2>Ready to Experience Luxury?</h2>
           <p>Book your stay now and get the best rates</p>
-          <Link href="/rooms" className="cta-button">
+          <Link href="/booking" className="cta-button">
             Book Now
           </Link>
         </div>
