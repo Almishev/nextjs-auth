@@ -4,11 +4,17 @@ import { notFound } from 'next/navigation'
 import type { Room } from '@/types/room'
 
 async function getRooms() {
-  const res = await fetch('http://localhost:3000/api/rooms', {
-    next: { revalidate: 3600 }
-  });
-  const data = await res.json();
-  return data.rooms as Room[];
+  try {
+    const res = await fetch('/api/rooms', {
+      next: { revalidate: 3600 }
+    });
+    if (!res.ok) throw new Error('Failed to fetch rooms');
+    const data = await res.json();
+    return data.rooms as Room[];
+  } catch (error) {
+    console.error('Error fetching rooms:', error);
+    return [];
+  }
 }
 
 async function getRoom(id: string) {
