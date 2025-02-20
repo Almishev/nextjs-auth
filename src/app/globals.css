@@ -459,21 +459,78 @@ body {
 }
 
 .room-details {
-  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.room-details h3 {
+.room-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.room-title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  color: #1a202c;
+  margin-bottom: 1rem;
 }
 
-.room-price {
-  display: block;
-  font-size: 1.25rem;
-  color: #667eea;
-  font-weight: 600;
-  margin-top: 1rem;
+.room-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4a5568;
+}
+
+.amenities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.amenity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f7fafc;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+.features {
+  margin: 1.5rem 0;
+}
+
+.book-now-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.book-now-button:hover {
+  background: #5a67d8;
 }
 
 /* Amenities Section */
@@ -574,6 +631,28 @@ body {
   
   .section-title {
     font-size: 2rem;
+  }
+
+  .room-details {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .room-info {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .amenities {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .amenity {
+    padding: 0.5rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -997,5 +1076,29 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+}
+
+/* Малки мобилни устройства */
+@media (max-width: 480px) {
+  .room-details {
+    padding: 0.75rem;
+  }
+
+  .room-title {
+    font-size: 1.25rem;
+  }
+
+  .amenities {
+    grid-template-columns: 1fr;
+  }
+
+  .info-item {
+    font-size: 0.875rem;
+  }
+
+  .book-now-button {
+    padding: 0.625rem;
+    font-size: 0.875rem;
   }
 }

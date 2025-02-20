@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Room } from '@/types/room'
 import { getRooms } from '@/lib/rooms'
+import { Bold } from 'lucide-react';
 
 export default async function Home() {
   const rooms = await getRooms();
@@ -21,7 +22,7 @@ export default async function Home() {
 
       {/* Featured Rooms */}
       <section className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="section-title">Featured Rooms</h2>
+        <h2 className="section-title" style={{marginTop:'20px',color:'white', fontWeight:'bold'}}>Featured Rooms</h2>
         <div className="featured-rooms">
           {rooms.slice(0, 3).map((room) => (
             <div key={room._id} className="featured-room">
@@ -48,7 +49,7 @@ export default async function Home() {
       </section>
 
       {/* Amenities Section */}
-      <section className="amenities-section">
+      <section className="amenities-section" style={{marginTop:'20px'}}>
         <h2 className="section-title">Hotel Amenities</h2>
         <div className="amenities-grid">
           <div className="amenity-item">
