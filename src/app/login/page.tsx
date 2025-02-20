@@ -18,23 +18,18 @@ export default function LoginPage() {
 
     const onLogin = async () => {
         try {
-            setError(""); // Изчистваме предишни грешки
+            setError("");
             setLoading(true);
+            
             const response = await axios.post("/api/users/login", user);
             
             if (response.data.success) {
                 toast.success("Login successful");
-                window.location.href = "/"; // Форсираме пълно презареждане
+                router.push("/");
             }
         } catch (error: any) {
-            console.log("Login error:", {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status
-            });
-            
-            setError(error.response?.data?.error || "Something went wrong!");
-            toast.error(error.response?.data?.error || "Something went wrong!");
+            setError(error.response?.data?.error || "Something went wrong");
+            toast.error(error.response?.data?.error || "Something went wrong");
         } finally {
             setLoading(false);
         }

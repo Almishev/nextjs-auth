@@ -1,30 +1,33 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
- 
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname
+    const path = request.nextUrl.pathname
+    const token = request.cookies.get('token')?.value
 
-  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail'
-  const token = request.cookies.get('token')?.value || ''
+    // Защитени рутове
+    const protectedPaths = ['/profile', '/users']
+    const isProtectedPath = protectedPaths.some(pp => path.startsWith(pp))
 
-  if (isPublicPath && token) {
-    return NextResponse.redirect(new URL('/', request.nextUrl))
-  }
+    // Публични рутове
+    const authPaths = ['/login', '/signup']
+    const isAuthPath = authPaths.includes(path)
 
-  if (!isPublicPath && !token) {
-    return NextResponse.redirect(new URL('/login', request.nextUrl))
-  }
+    // Редиректи
+    if (isProtectedPath && !token) {
+        return NextResponse.redirect(new URL('/login', request.nextUrl))
+    }
+
+    if (isAuthPath && token) {
+        return NextResponse.redirect(new URL('/', request.nextUrl))
+    }
 }
 
- 
-// See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    '/profile',
-    '/login',
-    '/signup',
-    '/verifyemail',
-    '/users'
-  ]
+    matcher: [
+        '/profile',
+        '/users',
+        '/login',
+        '/signup'
+    ]
 }
