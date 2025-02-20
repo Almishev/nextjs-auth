@@ -18,8 +18,7 @@
 }
 
 .date-range-container {
-  width: 100%;
-  background: #ffffff;  /* Бял фон */
+  background: white;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -36,17 +35,14 @@
 
 /* Calendar Customization */
 .rdrCalendarWrapper {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: transparent;
-  color: #1e293b;  /* Тъмен текст */
   width: 100%;
+  font-size: 16px;
+  background: white;
 }
 
 /* Хедър с избраните дати */
 .rdrDateDisplayWrapper {
-  background: #f8fafc;
-  border-radius: 6px;
-  margin-bottom: 1rem;
+  background-color: #f8fafc;
 }
 
 .rdrDateDisplay {
@@ -54,31 +50,26 @@
 }
 
 .rdrDateDisplayItem {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .rdrDateDisplayItem input {
-  color: #1e293b;
-  font-weight: 500;
+  color: #1a202c;
 }
 
 /* Месец и година */
 .rdrMonthAndYearWrapper {
   padding-top: 0.5rem;
-  color: #1e293b;
 }
 
 .rdrMonthAndYearPickers select {
-  color: #1e293b;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
+  color: #1a202c;
 }
 
-.rdrMonthAndYearPickers select:hover {
-  background: #f8fafc;
+.rdrMonth {
+  padding: 0 0.5rem 0.5rem;
 }
 
 /* Дни от седмицата */
@@ -89,15 +80,23 @@
 
 /* Дни */
 .rdrDay {
-  color: #1e293b;
+  color: #1a202c;
 }
 
 .rdrDayNumber span {
   color: #1e293b;
 }
 
+.rdrDayDisabled {
+  background-color: #f8fafc;
+}
+
 .rdrDayDisabled .rdrDayNumber span {
-  color: #cbd5e1;
+  color: #a0aec0;
+}
+
+.rdrDayPassive .rdrDayNumber span {
+  color: #cbd5e0;
 }
 
 /* Избрани дати */
@@ -109,7 +108,8 @@
 .rdrInRange, 
 .rdrStartEdge, 
 .rdrEndEdge {
-  background: #667eea !important;
+  background: #667eea;
+  color: white;
 }
 
 .rdrInRange {
@@ -125,7 +125,7 @@
 .rdrDayStartPreview, 
 .rdrDayInPreview, 
 .rdrDayEndPreview {
-  border-color: rgba(102, 126, 234, 0.5);
+  border: 2px solid #667eea;
 }
 
 /* Навигационни бутони */

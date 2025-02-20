@@ -27,8 +27,20 @@ export default function DateRangePicker({ onChange, initialDateRange }: DateRang
   }, [])
 
   const handleSelect = (ranges: any) => {
-    setDateRange([ranges.selection])
-    onChange(ranges.selection)
+    const startDate = new Date(ranges.selection.startDate)
+    startDate.setHours(12, 0, 0, 0)
+    
+    const endDate = new Date(ranges.selection.endDate)
+    endDate.setHours(12, 0, 0, 0)
+
+    const correctedRange = {
+      startDate,
+      endDate,
+      key: 'selection'
+    }
+
+    setDateRange([correctedRange])
+    onChange(correctedRange)
   }
 
   if (!isMounted) return null
