@@ -18,6 +18,11 @@ export async function getUserData(): Promise<UserData> {
         }
 
         const decodedToken: any = verify(token, process.env.TOKEN_SECRET!);
+        
+        if (!decodedToken || !decodedToken.id) {
+            return { id: '', isAdmin: false };
+        }
+
         await connect();
         const user = await User.findById(decodedToken.id);
 

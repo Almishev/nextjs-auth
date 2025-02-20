@@ -25,7 +25,8 @@ export default function LoginPage() {
             
             if (response.data.success) {
                 toast.success("Login successful");
-                router.push("/");
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                window.location.reload();
             }
         } catch (error: any) {
             setError(error.response?.data?.error || "Something went wrong");

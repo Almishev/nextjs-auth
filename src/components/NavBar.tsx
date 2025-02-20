@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { toast } from 'react-hot-toast'
 
 interface UserData {
   id: string;
@@ -23,11 +24,14 @@ export default function NavBar({ userData: initialUserData }: NavBarProps) {
     try {
       const response = await fetch('/api/users/logout')
       if (response.ok) {
-        setUserData({ id: '', isAdmin: false })
-        router.push('/login')
+        toast.success("Logged out successfully")
+        // Изчакваме малко toast-а да се покаже
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        window.location.reload() // Това ще презареди страницата и ще обнови навигацията
       }
     } catch (error) {
       console.error('Logout error:', error)
+      toast.error("Error logging out")
     }
   }
 
