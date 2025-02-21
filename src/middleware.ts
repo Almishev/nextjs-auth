@@ -10,7 +10,11 @@ export function middleware(request: NextRequest) {
     const isAdminPath = adminPaths.some(pp => path.startsWith(pp))
 
     // Защитени рутове - за регистрирани потребители
-    const userPaths = ['/profile']
+    const userPaths = [
+        '/profile',
+        '/profile/details',
+        '/profile/bookings'
+    ]
     const isUserPath = userPaths.some(pp => path.startsWith(pp))
 
     // Публични рутове
