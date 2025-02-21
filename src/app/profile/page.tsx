@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import '../styles/profile.css';
 
 // Добавяме интерфейс за userData
 interface UserData {
@@ -39,56 +40,6 @@ export default function ProfilePage() {
         loadUserData();
     }, []);
 
-    const getUserDetails = async () => {
-        try {
-            setLoading(true);
-            const res = await axios.get('/api/users/me');
-            const user = res.data.data;
-            
-            setUserData({
-                id: user._id,
-                isAdmin: user.isAdmin
-            });
-            
-            toast.success('Redirecting to profile details...');
-            router.push(`/profile/${user._id}`);
-        } catch (error: any) {
-            console.error(error.message);
-            toast.error(error.message);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const getAllUsers = async () => {
-        try {
-            setLoading(true);
-            const res = await axios.get('/api/users/allusers');
-            console.log(res.data);
-            toast.success('Redirecting to users page...');
-            router.push('/users');
-        } catch (error: any) {
-            console.error(error.message);
-            toast.error(error.message);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    const logout = async () => {
-        try {
-            await axios.get('/api/users/logout');
-            toast.success('Logout successful');
-            router.push('/login');
-        } catch (error: any) {
-            console.error(error.message);
-            toast.error(error.message);
-        }
-    }
-
-    // Добавяме лог за дебъгване
-    console.log("Current userData:", userData);
-
     return (
         <div className="center">
             <div className="form-container">
@@ -98,29 +49,44 @@ export default function ProfilePage() {
                 
                 <div className="button-group">
                     <button 
-                        onClick={getUserDetails}
+                        onClick={() => router.push('/profile/details')}
                         className="button"
                         disabled={loading}
                     >
-                        {loading ? "Loading..." : "Get User Details"}
+                        {loading ? "Loading..." : "Моят профил"}
+                    </button>
+
+                    <button 
+                        onClick={() => router.push('/profile/bookings')}
+                        className="button-bookings"
+                        disabled={loading}
+                    >
+                        {loading ? "Loading..." : "Моите резервации"}
                     </button>
 
                     {/* Показваме бутона само ако потребителят е админ */}
                     {userData.isAdmin && (
                         <button 
-                            onClick={getAllUsers}
+                            onClick={() => router.push('/users')}
                             className="button-getUsers"
                             disabled={loading}
                         >
-                            {loading ? "Loading..." : "Get All Users"}
+                            {loading ? "Loading..." : "Всички потребители"}
                         </button>
                     )}
                     
                     <button 
-                        onClick={logout}
+                        onClick={() => {
+                            axios.get('/api/users/logout')
+                                .then(() => {
+                                    toast.success('Успешен изход');
+                                    router.push('/login');
+                                })
+                                .catch(() => toast.error('Грешка при изход'));
+                        }}
                         className="button-secondary"
                     >
-                        Logout
+                        Изход
                     </button>
                 </div>
             </div>
