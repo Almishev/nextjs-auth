@@ -1,43 +1,84 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { NextRequest, NextResponse } from "next/server";
 import Booking from "@/models/bookingModel";
-import { getDataFromToken } from "@/helpers/getDataFromToken";
+import Room from "@/models/roomModel";
+import { NextRequest, NextResponse } from "next/server";
 
 connect();
 
 export async function POST(request: NextRequest) {
     try {
-        const userId = await getDataFromToken(request);
         const reqBody = await request.json();
-        const { startDate, endDate, guests, roomType } = reqBody;
+        const { 
+            roomId,
+            startDate, 
+            endDate, 
+            guests,
+            name,
+            email,
+            phone,
+            totalPrice
+        } = reqBody;
 
-        // Валидация
-        if (!startDate || !endDate || !guests || !roomType) {
+        // Проверяваме дали стаята съществува и има достатъчен капацитет
+        const room = await Room.findById(roomId);
+        if (!room) {
             return NextResponse.json(
-                { error: "All fields are required" },
+                { error: "Стаята не съществува" },
+                { status: 404 }
+            );
+        }
+
+        if (room.capacity < guests) {
+            return NextResponse.json(
+                { error: "Стаята няма достатъчен капацитет" },
                 { status: 400 }
             );
         }
 
-        // Създаване на резервация
+        // Проверяваме дали стаята е свободна за избраните дати
+        const existingBooking = await Booking.findOne({
+            roomId,
+            status: { $ne: 'cancelled' },
+            $or: [
+                {
+                    startDate: { $lte: new Date(endDate) },
+                    endDate: { $gte: new Date(startDate) }
+                }
+            ]
+        });
+
+        if (existingBooking) {
+            return NextResponse.json(
+                { error: "Стаята е заета за избраните дати" },
+                { status: 400 }
+            );
+        }
+
+        // Създаваме новата резервация
         const newBooking = new Booking({
-            userId,
-            startDate,
-            endDate,
-            guests,
-            roomType,
-            status: 'pending'
+            roomId,
+            guestName: name,
+            email,
+            phone,
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
+            numberOfGuests: guests,
+            totalPrice
         });
 
         const savedBooking = await newBooking.save();
 
         return NextResponse.json({
-            message: "Booking created successfully",
+            message: "Резервацията е създадена успешно",
             success: true,
             booking: savedBooking
         });
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        console.error("Грешка при създаване на резервация:", error);
+        return NextResponse.json(
+            { error: error.message },
+            { status: 500 }
+        );
     }
 } 

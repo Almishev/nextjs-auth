@@ -73,18 +73,23 @@ export default function ConfirmBooking() {
           roomId,
           startDate,
           endDate,
-          guests: parseInt(guests || '1')
+          guests: parseInt(guests || '1'),
+          name,
+          email,
+          phone,
+          totalPrice
         }),
       })
 
       if (response.ok) {
         toast.success('Резервацията е потвърдена успешно!')
-        router.push('/') // или където искате да пренасочите след успешна резервация
+        router.push('/') 
       } else {
         const data = await response.json()
         toast.error(data.error || 'Възникна грешка при резервацията')
       }
     } catch (error) {
+      console.error('Error creating booking:', error)
       toast.error('Възникна грешка при резервацията')
     } finally {
       setLoading(false)
