@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('token')?.value
 
     // Защитени рутове - само за админи
-    const adminPaths = ['/users']
+    const adminPaths = ['/users', '/reservations']
     const isAdminPath = adminPaths.some(pp => path.startsWith(pp))
 
     // Защитени рутове - за регистрирани потребители
@@ -48,6 +48,7 @@ export const config = {
         '/booking/:path*',
         '/profile/:path*',
         '/users/:path*',
+        '/reservations/:path*',
         '/login',
         '/signup'
     ]

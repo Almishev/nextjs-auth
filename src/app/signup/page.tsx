@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
 import {useRouter} from "next/navigation";
+import { toast } from 'react-hot-toast';
 import axios from "axios";
 
 export default function SignupPage() {
@@ -14,7 +15,6 @@ export default function SignupPage() {
     const [buttonDisabled, setButtonDisabled] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
     const [showPassword, setShowPassword] = React.useState(false);
-    const [error, setError] = React.useState("");
 
     // Валидация на email формата
     const isValidEmail = (email: string) => {
@@ -29,21 +29,20 @@ export default function SignupPage() {
 
     const validateForm = () => {
         if (!user.email || !user.password || !user.username) {
-            setError("All fields are required!");
+            toast.error("Всички полета са задължителни!");
             return false;
         }
 
         if (!isValidEmail(user.email)) {
-            setError("Please enter a valid email address!");
+            toast.error("Моля, въведете валиден имейл адрес!");
             return false;
         }
 
         if (!isValidPassword(user.password)) {
-            setError("Password must be at least 6 characters long!");
+            toast.error("Паролата трябва да е поне 6 символа!");
             return false;
         }
 
-        setError(""); // Изчистваме грешката ако всичко е наред
         return true;
     }
 
@@ -53,38 +52,30 @@ export default function SignupPage() {
         try {
             setLoading(true);
             const response = await axios.post("/api/users/signup", user);
-            console.log("Signup success:", response.data);
             
             if (response.data.success) {
+                toast.success("Регистрацията е успешна!");
+                // Изчакваме малко toast-а да се покаже
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 router.push("/login");
             }
         } catch (error: any) {
-            console.log("Signup error:", {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status
-            });
-            
-            setError(error.response?.data?.error || "Something went wrong!");
+            console.log("Signup error:", error);
+            toast.error(error.response?.data?.error || "Възникна грешка при регистрацията!");
         } finally {
             setLoading(false);
         }
     }
 
-    // Валидация при промяна на полетата
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setUser(prev => ({
             ...prev,
             [name]: value
         }));
-
-        // Изчистваме грешката при промяна
-        setError("");
     }
 
     useEffect(() => {
-        // Активираме бутона само ако има стойности във всички полета
         const isFormFilled = user.email && user.password && user.username;
         setButtonDisabled(!isFormFilled);
     }, [user]);
@@ -92,15 +83,9 @@ export default function SignupPage() {
     return (
         <div className="center">
             <div className="form-container">
-                <h1 className="title">{loading ? "Creating Account..." : "Sign Up"}</h1>
+                <h1 className="title">{loading ? "Създаване на акаунт..." : "Регистрация"}</h1>
                 
-                {error && (
-                    <span className="error-message">
-                        {error}
-                    </span>
-                )}
-                
-                <label className="label" htmlFor="username">Username</label>
+                <label className="label" htmlFor="username">Потребителско име</label>
                 <input 
                     className="input-field"
                     id="username"
@@ -108,10 +93,10 @@ export default function SignupPage() {
                     type="text"
                     value={user.username}
                     onChange={handleInputChange}
-                    placeholder="Enter your username"
+                    placeholder="Въведете потребителско име"
                 />
 
-                <label className="label" htmlFor="email">Email</label>
+                <label className="label" htmlFor="email">Имейл</label>
                 <input 
                     className="input-field"
                     id="email"
@@ -119,10 +104,10 @@ export default function SignupPage() {
                     type="email"
                     value={user.email}
                     onChange={handleInputChange}
-                    placeholder="Enter your email"
+                    placeholder="Въведете имейл адрес"
                 />
 
-                <label className="label" htmlFor="password">Password</label>
+                <label className="label" htmlFor="password">Парола</label>
                 <div className="password-container">
                     <input 
                         className="input-field"
@@ -131,14 +116,14 @@ export default function SignupPage() {
                         type={showPassword ? "text" : "password"}
                         value={user.password}
                         onChange={handleInputChange}
-                        placeholder="Enter your password (min 6 characters)"
+                        placeholder="Въведете парола (мин. 6 символа)"
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                         className="show-password-button"
                     >
-                        {showPassword ? "Hide" : "Show"}
+                        {showPassword ? "Скрий" : "Покажи"}
                     </button>
                 </div>
 
@@ -147,11 +132,11 @@ export default function SignupPage() {
                     disabled={buttonDisabled || loading}
                     className="button"
                 >
-                    {loading ? "Creating Account..." : "Create Account"}
+                    {loading ? "Създаване на акаунт..." : "Създай акаунт"}
                 </button>
 
                 <Link href="/login" className="link">
-                    Already have an account? Login
+                    Вече имате акаунт? Влезте
                 </Link>
             </div>
         </div>

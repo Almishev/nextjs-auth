@@ -80,6 +80,11 @@ export default function NavBar({ userData: initialUserData }: NavBarProps) {
                   Users
                 </Link>
               )}
+              {userData.isAdmin && (
+                <Link href="/reservations" className={isActive('/reservations')} onClick={() => setIsMenuOpen(false)}>
+                  Reservations
+                </Link>
+              )}
               <button 
                 onClick={handleLogout}
                 className="nav-link"
