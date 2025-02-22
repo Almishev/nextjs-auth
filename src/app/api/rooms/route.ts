@@ -125,7 +125,10 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
     try {
-        await connect();
+        if (!Room) {
+            throw new Error("Room model is not registered");
+        }
+
         const rooms = await Room.find({});
         
         return NextResponse.json({
@@ -136,7 +139,7 @@ export async function GET() {
     } catch (error: any) {
         console.error("API error:", error);
         return NextResponse.json(
-            { error: "Internal Server Error" },
+            { error: error.message || "Internal Server Error" },
             { status: 500 }
         );
     }

@@ -2,24 +2,27 @@ import mongoose from 'mongoose';
 
 export async function connect() {
     try {
-        if (!process.env.MONGO_URI) {
-            throw new Error('MONGO_URI is not defined in environment variables');
-        }
+        mongoose.connect(process.env.MONGO_URI!);
+        const connection = mongoose.connection;
 
-        // Validate MongoDB URI format
-        if (!process.env.MONGO_URI.startsWith('mongodb://') && !process.env.MONGO_URI.startsWith('mongodb+srv://')) {
-            throw new Error('Invalid MongoDB URI format. Must start with mongodb:// or mongodb+srv://');
-        }
+        connection.on('connected', () => {
+            console.log('MongoDB connected successfully');
+        });
 
-        if (mongoose.connection.readyState === 1) {
-            return mongoose.connection;
-        }
+        connection.on('error', (err) => {
+            console.log('MongoDB connection error. Please make sure MongoDB is running. ' + err);
+            process.exit();
+        });
 
-        const conn = await mongoose.connect(process.env.MONGO_URI);
-        console.log("MongoDB connected successfully");
-        return conn;
     } catch (error) {
-        console.error("MongoDB connection error:", error);
-        throw error;
+        console.log('Something goes wrong!');
+        console.log(error);
     }
+}
+
+export function registerModels() {
+    // Импортираме всички модели тук
+    require('@/models/userModel');
+    require('@/models/roomModel');
+    require('@/models/bookingModel');
 }

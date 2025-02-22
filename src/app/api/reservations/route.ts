@@ -1,33 +1,25 @@
 import { connect } from "@/dbConfig/dbConfig";
 import Booking from "@/models/bookingModel";
 import { NextRequest, NextResponse } from "next/server";
+import Room from "@/models/roomModel";
 
 connect();
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
-        // Създаваме обект с днешната дата в началото на деня (00:00:00)
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const bookings = await Booking.find({
-            // Взимаме резервации, където крайната дата е след днешната
-            endDate: { $gte: today }
-        })
-        .populate('roomId')
-        .sort({ startDate: 1 }); // Сортираме по начална дата във възходящ ред
+        const bookings = await Booking.find()
+            .populate('roomId')
+            .sort({ startDate: -1 });
 
         return NextResponse.json({
-            message: "Резервациите са заредени успешно",
+            message: "Reservations fetched successfully",
             success: true,
             bookings
         });
 
     } catch (error: any) {
-        return NextResponse.json(
-            { error: error.message },
-            { status: 500 }
-        );
+        console.error("Error in GET /api/reservations:", error);
+        return NextResponse.json({ error: error.message }, { status: 400 });
     }
 }
 
