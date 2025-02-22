@@ -5,6 +5,9 @@ export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname
     const token = request.cookies.get('token')?.value
 
+    console.log('Middleware executing for path:', path);
+    console.log('Token exists:', !!token);
+
     // Защитени рутове - само за админи
     const adminPaths = ['/users', '/reservations']
     const isAdminPath = adminPaths.some(pp => path.startsWith(pp))
@@ -25,6 +28,9 @@ export function middleware(request: NextRequest) {
         '/booking',
         '/booking/available-rooms',
         '/booking/confirm',
+        '/verifyemail',
+        '/resetpassword',
+        '/forgotpassword',
         '/login',
         '/signup'
     ]
@@ -34,13 +40,21 @@ export function middleware(request: NextRequest) {
     const authPaths = ['/login', '/signup']
     const isAuthPath = authPaths.includes(path)
 
+    console.log('Path types:', {
+        isAdminPath,
+        isUserPath,
+        isAuthPath
+    });
+
     // Редиректи
     if ((isAdminPath || isUserPath) && !token) {
+        console.log('Redirecting to login - protected route without token');
         return NextResponse.redirect(new URL('/login', request.nextUrl))
     }
 
     if (isAuthPath && token) {
-        return NextResponse.redirect(new URL('/', request.nextUrl))
+        console.log('Redirecting to profile - auth path with token');
+        return NextResponse.redirect(new URL('/profile', request.nextUrl))
     }
 }
 
@@ -54,6 +68,9 @@ export const config = {
         '/users/:path*',
         '/reservations/:path*',
         '/login',
-        '/signup'
+        '/signup',
+        '/verifyemail',
+        '/resetpassword',
+        '/forgotpassword'
     ]
 }

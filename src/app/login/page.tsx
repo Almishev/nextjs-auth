@@ -18,17 +18,22 @@ export default function LoginPage() {
 
     const onLogin = async () => {
         try {
+            console.log('Starting login process');
             setError("");
             setLoading(true);
             
             const response = await axios.post("/api/users/login", user);
+            console.log('Login response:', response.data);
             
             if (response.data.success) {
+                console.log('Login successful, preparing redirect');
                 toast.success("Login successful");
                 await new Promise(resolve => setTimeout(resolve, 1000));
-                window.location.reload();
+                console.log('Redirecting...');
+                window.location.href = '/profile';
             }
         } catch (error: any) {
+            console.error('Login error:', error);
             setError(error.response?.data?.error || "Something went wrong");
             toast.error(error.response?.data?.error || "Something went wrong");
         } finally {

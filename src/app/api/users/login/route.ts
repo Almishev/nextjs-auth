@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest){
     try {
+        console.log('Processing login request');
         const reqBody = await request.json()
         const {email, password} = reqBody;
 
@@ -52,6 +53,7 @@ export async function POST(request: NextRequest){
         })
 
         // Подобрени cookie настройки
+        console.log('Setting token in cookie');
         response.cookies.set("token", token, {
             httpOnly: true,
             secure: true,
@@ -60,9 +62,11 @@ export async function POST(request: NextRequest){
             maxAge: 86400
         })
 
+        console.log('Login completed successfully');
         return response;
 
     } catch (error: any) {
+        console.error('Login error:', error);
         return NextResponse.json({
             success: false,
             error: "Internal server error"
