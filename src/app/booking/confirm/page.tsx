@@ -7,18 +7,18 @@ import '../../styles/confirm.css'
 
 export default function ConfirmBooking() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const params = useSearchParams()
   const [loading, setLoading] = useState(false)
   const [roomDetails, setRoomDetails] = useState<any>(null)
   const [totalPrice, setTotalPrice] = useState(0)
 
-  const roomId = searchParams.get('roomId')
-  const startDate = searchParams.get('startDate')
-  const endDate = searchParams.get('endDate')
-  const guests = searchParams.get('guests')
-  const name = searchParams.get('name')
-  const email = searchParams.get('email')
-  const phone = searchParams.get('phone')
+  const roomId = params?.get('roomId') || ''
+  const startDate = params?.get('startDate') || ''
+  const endDate = params?.get('endDate') || ''
+  const guests = params?.get('guests') || '1'
+  const name = params?.get('name') || ''
+  const email = params?.get('email') || ''
+  const phone = params?.get('phone') || ''
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)

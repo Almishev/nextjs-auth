@@ -116,4 +116,40 @@
 .price-section p {
   margin: 0.5rem 0;
   color: #4a5568;
+}
+
+.guest-info {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.guest-info h4 {
+    color: #444;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.booking-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.booking-header {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.booking-details p {
+    margin: 8px 0;
+    color: #666;
+}
+
+.booking-details .price {
+    font-weight: bold;
+    color: #2c5282;
 } 

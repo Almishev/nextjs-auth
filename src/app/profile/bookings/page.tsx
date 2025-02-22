@@ -25,10 +25,12 @@ export default function MyBookings() {
         const loadBookings = async () => {
             try {
                 const response = await axios.get('/api/users/me/bookings');
+                console.log("API Response:", response.data);
                 setBookings(response.data.bookings);
                 toast.success("Bookings loaded successfully");
             } catch (error: any) {
-                toast.error("Error fetching bookings");
+                console.error("Error loading bookings:", error);
+                toast.error(error.response?.data?.error || "Error fetching bookings");
             } finally {
                 setLoading(false);
             }
