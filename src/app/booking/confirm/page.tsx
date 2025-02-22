@@ -77,11 +77,33 @@ export default function ConfirmBooking() {
           name,
           email,
           phone,
-          totalPrice
+          totalPrice,
+          roomName: roomDetails?.name
         }),
       })
 
       if (response.ok) {
+        // Изпращаме потвърждение по имейл
+        await fetch('/api/booking/send-confirmation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            bookingDetails: {
+              startDate,
+              endDate,
+              guests,
+              name,
+              phone,
+              email,
+              totalPrice,
+              roomName: roomDetails?.name
+            }
+          })
+        });
+
         toast.success('Резервацията е потвърдена успешно!')
         router.push('/') 
       } else {

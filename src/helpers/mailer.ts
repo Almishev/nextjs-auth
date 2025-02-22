@@ -91,3 +91,56 @@ export const sendEmail = async({email, emailType, userId}:any) => {
         toast.dismiss(); // Dismiss any loading toasts
     }
 }
+
+export const sendBookingConfirmation = async ({email, bookingDetails}: any) => {
+    try {
+        const transport = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: Number(process.env.EMAIL_PORT),
+            secure: false, // true за 465 порт, false за други портове
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: `"Хотелски резервации" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "Потвърждение на вашата резервация",
+            html: `
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
+                    <h2 style="color: #333; text-align: center;">Потвърждение на резервация</h2>
+                    
+                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;">
+                        <h3 style="color: #444;">Детайли за престоя:</h3>
+                        <p><strong>Настаняване:</strong> ${new Date(bookingDetails.startDate).toLocaleDateString('bg-BG')}</p>
+                        <p><strong>Напускане:</strong> ${new Date(bookingDetails.endDate).toLocaleDateString('bg-BG')}</p>
+                        <p><strong>Брой гости:</strong> ${bookingDetails.guests}</p>
+                        <p><strong>Стая:</strong> ${bookingDetails.roomName}</p>
+                        <p><strong>Обща цена:</strong> $${bookingDetails.totalPrice}</p>
+                    </div>
+
+                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+                        <h3 style="color: #444;">Информация за госта:</h3>
+                        <p><strong>Име:</strong> ${bookingDetails.name}</p>
+                        <p><strong>Телефон:</strong> ${bookingDetails.phone}</p>
+                        <p><strong>Имейл:</strong> ${bookingDetails.email}</p>
+                    </div>
+
+                    <p style="color: #666; margin-top: 20px;">
+                        Благодарим ви, че избрахте нашия хотел! Ако имате въпроси, моля свържете се с нас.
+                    </p>
+                </div>
+            `
+        };
+
+        const mailresponse = await transport.sendMail(mailOptions);
+        console.log("Booking confirmation email sent:", mailresponse.messageId);
+        return mailresponse;
+
+    } catch (error: any) {
+        console.error("Error sending booking confirmation:", error.message);
+        throw new Error(error.message);
+    }
+}
