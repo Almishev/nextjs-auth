@@ -1,8 +1,8 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
+import Room from "@/models/roomModel";
 import User from "@/models/userModel";
 import Booking from "@/models/bookingModel";
-import Room from "@/models/roomModel";
 import { NextRequest, NextResponse } from "next/server";
 
 connect();

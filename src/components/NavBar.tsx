@@ -75,15 +75,18 @@ export default function NavBar({ userData: initialUserData }: NavBarProps) {
               <Link href="/profile" className={isActive('/profile')} onClick={() => setIsMenuOpen(false)}>
                 Profile
               </Link>
+              <Link href="/profile/bookings" className={isActive('/profile/bookings')} onClick={() => setIsMenuOpen(false)}>
+                My Reservations
+              </Link>
               {userData.isAdmin && (
-                <Link href="/users" className={isActive('/users')} onClick={() => setIsMenuOpen(false)}>
-                  Users
-                </Link>
-              )}
-              {userData.isAdmin && (
-                <Link href="/reservations" className={isActive('/reservations')} onClick={() => setIsMenuOpen(false)}>
-                  Reservations
-                </Link>
+                <>
+                  <Link href="/users" className={isActive('/users')} onClick={() => setIsMenuOpen(false)}>
+                    Users
+                  </Link>
+                  <Link href="/reservations" className={isActive('/reservations')} onClick={() => setIsMenuOpen(false)}>
+                    All Reservations
+                  </Link>
+                </>
               )}
               <button 
                 onClick={handleLogout}
