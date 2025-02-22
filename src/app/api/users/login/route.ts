@@ -57,9 +57,10 @@ export async function POST(request: NextRequest){
         response.cookies.set("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "lax", // Променено от "strict" на "lax"
+            sameSite: "lax",
             path: "/",
-            maxAge: 86400
+            maxAge: 86400,
+            domain: ".vercel.app"
         })
 
         console.log('Login completed successfully');
