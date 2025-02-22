@@ -1,66 +1,29 @@
 import mongoose from "mongoose";
 
 const roomSchema = new mongoose.Schema({
-    roomNumber: {
-        type: String,
-        required: [true, "Please enter room number"],
-        unique: true,
-    },
-    name: {
-        type: String,
-        required: [true, "Please enter room name"],
-    },
-    type: {
-        type: String,
-        required: [true, "Please enter room type"],
-        enum: ["classic-double", "luxury-double", "modern-double", "luxury-apartment"]
-    },
-    price: {
-        type: Number,
-        required: [true, "Please enter price"],
-    },
-    capacity: {
-        type: Number,
-        required: [true, "Please enter room capacity"],
-    },
-    size: {
-        type: Number,
-        required: [true, "Please enter room size in m²"],
-    },
-    description: {
-        type: String,
-        required: [true, "Please enter description"],
-    },
-    image: {
-        type: String,
-        required: [true, "Please enter image URL"],
-    },
-    amenities: [{
-        type: String
-    }],
-    features: [{
-        type: String
-    }],
+    roomNumber: String,
+    name: String,
+    type: String,
+    price: Number,
+    capacity: Number,
+    size: Number,
+    description: String,
+    image: String,
+    amenities: [String],
+    features: [String],
     isAvailable: {
         type: Boolean,
         default: true
     },
-    // Полета за резервационната система
     bookings: [{
-        startDate: Date,
-        endDate: Date,
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'users'
-        },
-        status: {
-            type: String,
-            enum: ['pending', 'confirmed', 'cancelled'],
-            default: 'pending'
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Booking'
     }]
-}, { timestamps: true });
+}, {
+    timestamps: true
+});
 
-const Room = mongoose.models.rooms || mongoose.model("rooms", roomSchema);
+// Проверяваме дали моделът вече е регистриран
+const Room = mongoose.models.Room || mongoose.model("Room", roomSchema);
 
 export default Room; 

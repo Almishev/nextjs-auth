@@ -8,7 +8,7 @@ const bookingSchema = new mongoose.Schema({
     },
     roomId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'rooms',
+        ref: 'Room',
         required: [true, "Room ID is required"]
     },
     guestName: {
@@ -45,6 +45,6 @@ const bookingSchema = new mongoose.Schema({
     }
 });
 
-const Booking = mongoose.models.bookings || mongoose.model("bookings", bookingSchema);
+const Booking = mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
 
 export default Booking; 
