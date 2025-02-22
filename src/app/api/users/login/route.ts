@@ -59,8 +59,7 @@ export async function POST(request: NextRequest){
             secure: true,
             sameSite: "lax",
             path: "/",
-            maxAge: 86400,
-            domain: ".vercel.app"
+            maxAge: 86400
         })
 
         console.log('Login completed successfully');
