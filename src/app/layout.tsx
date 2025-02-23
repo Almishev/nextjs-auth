@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar key={userData.id} userData={userData} />
+        <NavBar userData={userData} />
         <main className="main-content">
           {children}
         </main>

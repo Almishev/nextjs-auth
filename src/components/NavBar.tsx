@@ -25,9 +25,13 @@ export default function NavBar({ userData: initialUserData }: NavBarProps) {
       const response = await fetch('/api/users/logout')
       if (response.ok) {
         toast.success("Logged out successfully")
-        // Изчакваме малко toast-а да се покаже
+        // Изчистваме userData
+        setUserData({ id: '', isAdmin: false })
+        // Изчакваме toast-а
         await new Promise(resolve => setTimeout(resolve, 1000))
-        window.location.reload() // Това ще презареди страницата и ще обнови навигацията
+        // Вместо router.push, правим пълно пренасочване
+        window.location.href = '/login'
+        // Това ще накара Next.js да презареди layout.tsx и да вземе новите userData
       }
     } catch (error) {
       console.error('Logout error:', error)
