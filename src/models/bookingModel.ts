@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const bookingSchema = new mongoose.Schema({
+const bookingSchema = mongoose.models.Booking?.schema || new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
+        ref: 'User',
         required: false
     },
     roomId: {

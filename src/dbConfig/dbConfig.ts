@@ -1,36 +1,30 @@
 import mongoose from 'mongoose';
-import Room from '@/models/roomModel';
-import User from '@/models/userModel';
-import Booking from '@/models/bookingModel';
 
 export async function connect() {
     try {
+        // Проверяваме дали вече сме свързани
         if (mongoose.connection.readyState === 1) {
             return mongoose.connection;
         }
 
+        // Свързваме се
         await mongoose.connect(process.env.MONGO_URI!);
-        const connection = mongoose.connection;
+        
+        // Регистрираме моделите
+        require('@/models/roomModel');
+        require('@/models/userModel');
+        require('@/models/bookingModel');
 
-        connection.on('connected', () => {
-            console.log('MongoDB connected successfully');
-            // Уверяваме се, че моделите са регистрирани
-            console.log('Models registered:', {
-                Room: !!mongoose.models.Room,
-                User: !!mongoose.models.User,
-                Booking: !!mongoose.models.Booking
-            });
+        console.log('MongoDB connected successfully');
+        console.log('Models registered:', {
+            Room: !!mongoose.models.Room,
+            User: !!mongoose.models.User,
+            Booking: !!mongoose.models.Booking
         });
 
-        connection.on('error', (err) => {
-            console.log('MongoDB connection error:', err);
-            process.exit();
-        });
-
+        return mongoose.connection;
     } catch (error) {
-        console.log('Connection error:', error);
+        console.error('MongoDB connection error:', error);
+        throw error;
     }
 }
-
-// Премахваме registerModels функцията, тъй като моделите
-// се регистрират чрез импортите

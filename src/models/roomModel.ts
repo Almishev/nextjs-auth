@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const roomSchema = new mongoose.Schema({
+// Проверяваме дали схемата вече съществува
+const roomSchema = mongoose.models.Room?.schema || new mongoose.Schema({
     roomNumber: String,
     name: String,
     type: String,
