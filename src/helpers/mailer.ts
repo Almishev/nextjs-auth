@@ -4,7 +4,12 @@ import bcryptjs from 'bcryptjs';
 
 export async function sendEmail({ email, emailType, userId }: any) {
     try {
-        console.log(`Starting email send process for ${email} (${emailType})`);
+        console.log("Starting email send process with config:", {
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            user: process.env.EMAIL_USER,
+            domain: process.env.DOMAIN
+        });
         
         // create a hashed token
         const hashedToken = await bcryptjs.hash(userId.toString(), 10);
@@ -36,18 +41,16 @@ export async function sendEmail({ email, emailType, userId }: any) {
 
         // Конфигурираме транспорта
         console.log("Configuring email transport with:", {
-            host: "smtp.gmail.com",
-            port: 587,
-            auth: {
-                user: process.env.EMAIL_USER,
-                // Не логваме паролата!
-                pass: "****"
-            }
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            user: process.env.EMAIL_USER,
+            domain: process.env.DOMAIN
         });
 
         const transport = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
+            host: process.env.EMAIL_HOST,
+            port: Number(process.env.EMAIL_PORT),
+            secure: false, // true за 465 порт, false за други портове
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
@@ -69,17 +72,25 @@ export async function sendEmail({ email, emailType, userId }: any) {
             subject: mailOptions.subject
         });
 
+        // Преди изпращане на имейла
+        console.log("Preparing to send email with options:", {
+            from: mailOptions.from,
+            to: mailOptions.to,
+            subject: mailOptions.subject
+        });
+
         const mailResponse = await transport.sendMail(mailOptions);
-        console.log("Email sent successfully. Message ID:", mailResponse.messageId);
+        console.log("Email sent with response:", mailResponse);
         return mailResponse;
 
     } catch (error: any) {
-        console.error("Detailed error in sendEmail:", {
+        console.error("Email send error details:", {
+            name: error.name,
             message: error.message,
-            stack: error.stack,
-            code: error.code
+            code: error.code,
+            command: error.command
         });
-        throw new Error(`Error sending email: ${error.message}`);
+        throw error;
     }
 }
 
