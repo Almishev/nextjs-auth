@@ -22,7 +22,7 @@ export async function sendEmail({ email, emailType, userId }: any) {
                     $set: {
                         isVerified: false,
                         verifyToken: hashedToken,
-                        verifyTokenExpiry: Date.now() + 3600000
+                        verifyTokenExpiry: Date.now() + 2 * 3600000
                     }
                 },
                 { upsert: true }
@@ -33,7 +33,7 @@ export async function sendEmail({ email, emailType, userId }: any) {
             await User.findByIdAndUpdate(userId, 
                 {
                     forgotPasswordToken: hashedToken,
-                    forgotPasswordTokenExpiry: Date.now() + 3600000
+                    forgotPasswordTokenExpiry: Date.now() + 2 * 3600000
                 }
             );
             console.log("User updated with password reset token");
@@ -57,9 +57,14 @@ export async function sendEmail({ email, emailType, userId }: any) {
             }
         });
 
-        // Тестваме връзката
-        await transport.verify();
-        console.log("SMTP connection verified successfully");
+        // Test SMTP connection
+        try {
+            await transport.verify();
+            console.log('SMTP connection verified successfully');
+        } catch (error) {
+            console.error('SMTP connection failed:', error);
+            throw error;
+        }
 
         const mailOptions = {
             from: process.env.EMAIL_USER,
