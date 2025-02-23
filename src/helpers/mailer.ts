@@ -8,15 +8,19 @@ export async function sendEmail({ email, emailType, userId }: any) {
         
         // create a hashed token
         const hashedToken = await bcryptjs.hash(userId.toString(), 10);
-        console.log("Token created:", hashedToken);
+        console.log("Hashed token created");
 
         if (emailType === "VERIFY") {
             console.log("Updating user with verification token");
             await User.findByIdAndUpdate(userId, 
                 {
-                    verifyToken: hashedToken,
-                    verifyTokenExpiry: Date.now() + 3600000
-                }
+                    $set: {
+                        isVerified: false,
+                        verifyToken: hashedToken,
+                        verifyTokenExpiry: Date.now() + 3600000
+                    }
+                },
+                { upsert: true }
             );
             console.log("User updated with verification token");
         } else if (emailType === "RESET"){
@@ -30,6 +34,17 @@ export async function sendEmail({ email, emailType, userId }: any) {
             console.log("User updated with password reset token");
         }
 
+        // Конфигурираме транспорта
+        console.log("Configuring email transport with:", {
+            host: "smtp.gmail.com",
+            port: 587,
+            auth: {
+                user: process.env.EMAIL_USER,
+                // Не логваме паролата!
+                pass: "****"
+            }
+        });
+
         const transport = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
@@ -39,19 +54,31 @@ export async function sendEmail({ email, emailType, userId }: any) {
             }
         });
 
+        // Тестваме връзката
+        await transport.verify();
+        console.log("SMTP connection verified successfully");
+
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: email,
             subject: emailType === "VERIFY" ? "Verify your email" : "Reset your password",
             html: `<p>Click <a href="${process.env.DOMAIN}/${emailType === "VERIFY" ? "verifyemail" : "resetpassword"}?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}</p>`
         };
+        console.log("Mail options prepared:", {
+            to: email,
+            subject: mailOptions.subject
+        });
 
         const mailResponse = await transport.sendMail(mailOptions);
-        console.log("Email sent successfully:", mailResponse.messageId);
+        console.log("Email sent successfully. Message ID:", mailResponse.messageId);
         return mailResponse;
 
     } catch (error: any) {
-        console.error("Error in sendEmail:", error.message);
+        console.error("Detailed error in sendEmail:", {
+            message: error.message,
+            stack: error.stack,
+            code: error.code
+        });
         throw new Error(`Error sending email: ${error.message}`);
     }
 }
