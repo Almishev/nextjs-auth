@@ -41,10 +41,22 @@ export async function POST(request: NextRequest){
         //send verification email
         console.log("Attempting to send verification email...");
         try {
-            await sendEmail({email, emailType: "VERIFY", userId: savedUser._id})
+            console.log("Email configuration:", {
+                EMAIL_HOST: process.env.EMAIL_HOST,
+                EMAIL_PORT: process.env.EMAIL_PORT,
+                EMAIL_USER: process.env.EMAIL_USER,
+                DOMAIN: process.env.DOMAIN
+            });
+            
+            await sendEmail({email, emailType: "VERIFY", userId: savedUser._id});
             console.log("Verification email sent successfully");
-        } catch (emailError) {
-            console.error("Error sending verification email:", emailError);
+        } catch (emailError: any) {
+            console.error("Detailed email error:", {
+                message: emailError.message,
+                code: emailError.code,
+                command: emailError.command,
+                stack: emailError.stack
+            });
         }
 
         return NextResponse.json({
