@@ -1,5 +1,6 @@
 import { connect } from "@/dbConfig/dbConfig";
 import mongoose from "mongoose";
+export const dynamic = "force-dynamic";
 
 // Първо импортираме Room модела
 import Room from "@/models/roomModel";

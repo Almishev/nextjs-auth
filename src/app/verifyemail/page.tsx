@@ -1,12 +1,13 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import axios from "axios";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
     const [token, setToken] = useState("");
     const [verified, setVerified] = useState(false);
     const [error, setError] = useState(false);
@@ -68,5 +69,22 @@ export default function VerifyEmailPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function VerifyEmailPage() {
+    return (
+        <Suspense fallback={
+            <div className="center">
+                <div className="form-container">
+                    <h1 className="title">Email Verification</h1>
+                    <div className="profile-info">
+                        <p className="text">Loading verification page...</p>
+                    </div>
+                </div>
+            </div>
+        }>
+            <VerifyEmailContent />
+        </Suspense>
     );
 }

@@ -2,82 +2,49 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-    try {
-        const path = request.nextUrl.pathname
-        const token = request.cookies.get('token')?.value
-        console.error('DEBUG:', {  
-            path,
-            hasToken: !!token,
-            cookies: request.cookies.getAll()
-        });
-
-       
-        const adminPaths = ['/users', '/reservations']
-        const isAdminPath = adminPaths.some(pp => path.startsWith(pp))
-
-        
-        const userPaths = [
-            '/profile',
-            '/profile/details',
-            '/profile/bookings'
-        ]
-        const isUserPath = userPaths.some(pp => path.startsWith(pp))
-
+    const path = request.nextUrl.pathname;
     
-        const publicPaths = [
-            '/',
-            '/about',
-            '/rooms',
-            '/booking',
-            '/booking/available-rooms',
-            '/booking/confirm',
-            '/verifyemail',
-            '/resetpassword',
-            '/forgotpassword',
-            '/login',
-            '/signup'
-        ]
-        const isPublicPath = publicPaths.some(pp => path.startsWith(pp))
-
-        
-        const authPaths = ['/login', '/signup']
-        const isAuthPath = authPaths.includes(path)
-
-        console.log('Path types:', {
-            isAdminPath,
-            isUserPath,
-            isAuthPath
-        });
-
-        
-        if ((isAdminPath || isUserPath) && !token) {
-            console.log('Redirecting to login - protected route without token');
-            return NextResponse.redirect(new URL('/login', request.nextUrl))
-        }
-
-        if (isAuthPath && token) {
-            console.log('Redirecting to profile - auth path with token');
-            return NextResponse.redirect(new URL('/profile', request.nextUrl))
-        }
-    } catch (error) {
-        console.error('Middleware Error:', error);
-        return NextResponse.redirect(new URL('/login', request.nextUrl))
+    const isPublicPath = path === '/login' || 
+                         path === '/signup' || 
+                         path === '/verifyemail' || 
+                         path === '/forgotpassword' ||
+                         path === '/resetpassword' ||
+                         path === '/' ||
+                         path === '/about' ||
+                         path === '/rooms' ||
+                         path.startsWith('/rooms/') ||
+                         path === '/booking';
+                         
+    const token = request.cookies.get('token')?.value || '';
+    
+    // Redirect to login if accessing protected route without token
+    if (!isPublicPath && !token) {
+        return NextResponse.redirect(new URL('/login', request.url));
     }
+    
+    // Redirect to profile if accessing login/signup with valid token
+    if (isPublicPath && token && (path === '/login' || path === '/signup')) {
+        return NextResponse.redirect(new URL('/profile', request.url));
+    }
+    
+    return NextResponse.next();
 }
 
+// Define paths that will trigger the middleware
 export const config = {
     matcher: [
-        '/',
-        '/about',
-        '/rooms/:path*',
-        '/booking/:path*',
+        // Protected routes that require authentication
         '/profile/:path*',
         '/users/:path*',
-        '/reservations/:path*',
+        '/reservations',
+        '/booking/confirm',
+        '/booking/available-rooms',
+        
+        // Public routes we want to conditionally redirect from
         '/login',
         '/signup',
         '/verifyemail',
+        '/forgotpassword', 
         '/resetpassword',
-        '/forgotpassword'
     ]
 }

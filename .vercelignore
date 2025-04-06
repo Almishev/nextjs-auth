@@ -1,0 +1,12 @@
+# API routes using dynamic data
+/api/
+
+# Pages using dynamic data or cookies
+/booking/
+/profile/
+/verifyemail
+/resetpassword
+/login
+/signup
+/users
+/reservations 

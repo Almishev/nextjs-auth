@@ -1,10 +1,12 @@
 'use client'
-import { useState, useEffect } from 'react'
+export const dynamic = "force-dynamic";
+
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { toast } from 'react-hot-toast'
 
-export default function ConfirmBooking() {
+function BookingConfirmContent() {
   const router = useRouter()
   const params = useSearchParams()
   const [loading, setLoading] = useState(false)
@@ -165,5 +167,20 @@ export default function ConfirmBooking() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ConfirmBooking() {
+  return (
+    <Suspense fallback={
+      <div className="confirm-container">
+        <h1 className="confirm-title">Потвърждение на резервация</h1>
+        <div className="booking-details">
+          <p>Зареждане на детайли за резервацията...</p>
+        </div>
+      </div>
+    }>
+      <BookingConfirmContent />
+    </Suspense>
   )
 } 
