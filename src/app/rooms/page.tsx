@@ -17,7 +17,7 @@ export default async function Rooms() {
         </div>
       </section>
 
-      {/* Секция с препоръчана стая */}
+      
       <section className="max-w-6xl mx-auto px-4 mb-16 animate-fadeIn">
         <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl overflow-hidden shadow-xl">
           <div className="flex flex-col md:flex-row">
