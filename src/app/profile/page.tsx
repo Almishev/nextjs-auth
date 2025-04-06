@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { UserCircle, Calendar, Users, LogOut, UserCog, ChevronRight } from 'lucide-react';
 import Image from "next/image";
 
-// Добавяме интерфейс за userData
+
 interface UserData {
     id: string;
     isAdmin: boolean;
@@ -26,13 +26,13 @@ export default function ProfilePage() {
     });
     const [loading, setLoading] = useState(true);
 
-    // Добавяме useEffect за автоматично зареждане на данните
+    
     useEffect(() => {
         const loadUserData = async () => {
             try {
                 const res = await axios.get('/api/users/me');
                 const user = res.data.data;
-                console.log("Loaded user data:", user); // За дебъгване
+                console.log("Loaded user data:", user); 
                 
                 setUserData({
                     id: user._id,

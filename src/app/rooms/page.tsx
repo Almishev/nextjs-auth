@@ -42,18 +42,10 @@ export default async function Rooms() {
               <h2 className="text-3xl font-bold mb-4 text-gray-800">Премиум апартамент с изглед</h2>
               <p className="text-gray-600 mb-6">Луксозен апартамент с панорамен изглед, включва джакузи, король размер легло, седнал кът и луксозна баня. Идеален за специални случаи.</p>
               <div className="flex items-center justify-between mb-6">
-                <div>
-                  <span className="block text-sm text-gray-500">Стартираща цена</span>
-                  <span className="text-3xl font-bold text-indigo-600">450 лв</span>
-                  <span className="text-gray-600 ml-1">/ нощувка</span>
-                </div>
-                <div className="bg-indigo-100 rounded-lg py-2 px-4">
-                  <span className="text-indigo-700 font-medium">-15% тази седмица</span>
-                </div>
+               
+                
               </div>
-              <Link href="/rooms/premium" className="bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium inline-block text-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
-                Резервирайте сега
-              </Link>
+              
             </div>
           </div>
         </div>

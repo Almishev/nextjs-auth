@@ -55,7 +55,7 @@ export default function ReservationsPage() {
     }, []);
 
     const ReservationCard = ({ reservation }: { reservation: Reservation }) => {
-        // Изчисляване на броя нощувки
+       
         const startDate = new Date(reservation.startDate);
         const endDate = new Date(reservation.endDate);
         const nights = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
@@ -107,7 +107,7 @@ export default function ReservationsPage() {
                             </div>
                         </div>
                         
-                        {/* Детайли за резервацията */}
+                        
                         <div className="space-y-4">
                             <div className="flex items-start">
                                 <Calendar className="w-5 h-5 text-indigo-500 mt-0.5 mr-3" />

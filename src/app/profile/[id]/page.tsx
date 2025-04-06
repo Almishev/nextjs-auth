@@ -4,7 +4,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-// Добавяме интерфейс за типа на потребителя
 interface UserType {
     username: string;
     email: string;
@@ -42,7 +41,7 @@ export default function UserProfile({ params }: any) {
                 const userResponse = await axios.get(`/api/users/me`);
                 setUser(userResponse.data.data);
 
-                // Зареждаме резервациите на потребителя
+               
                 const bookingsResponse = await axios.get(`/api/users/me/bookings`);
                 setBookings(bookingsResponse.data.bookings);
                 

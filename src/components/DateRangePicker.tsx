@@ -5,8 +5,6 @@ import { addDays } from 'date-fns'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import '../app/styles/daterange.css'
-import { bg } from 'date-fns/locale'
-
 
 interface DateRangePickerProps {
   onChange: (range: Range) => void
@@ -50,7 +48,6 @@ export default function DateRangePicker({ onChange, initialDateRange }: DateRang
   return (
     <div className="rounded-lg bg-white p-4 shadow-md w-full">
       <DateRange
-        locale={bg}
         ranges={dateRange}
         onChange={handleSelect}
         months={1}
@@ -60,6 +57,7 @@ export default function DateRangePicker({ onChange, initialDateRange }: DateRang
         maxDate={addDays(new Date(), 365)}
         rangeColors={['#667eea']}
         color="#667eea"
+        dateDisplayFormat="MM/dd/yyyy"
       />
     </div>
   )

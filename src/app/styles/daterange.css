@@ -36,96 +36,178 @@
 /* Calendar Customization */
 .rdrCalendarWrapper {
   width: 100%;
-  font-size: 16px;
-  background: white;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
 }
 
 /* Хедър с избраните дати */
 .rdrDateDisplayWrapper {
-  background-color: #f8fafc;
+  background-color: #f3f4f6;
+  border-radius: 0.5rem 0.5rem 0 0;
 }
 
 .rdrDateDisplay {
-  margin: 0.5rem;
+  margin: 0.75rem;
 }
 
 .rdrDateDisplayItem {
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: white;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin: 0 5px;
+  padding: 0 10px;
 }
 
 .rdrDateDisplayItem input {
-  color: #1a202c;
+  color: #374151;
+  font-weight: 500;
+}
+
+.rdrDateDisplayItemActive {
+  border-color: #667eea;
 }
 
 /* Месец и година */
 .rdrMonthAndYearWrapper {
+  align-items: center;
+  height: 48px;
   padding-top: 0.5rem;
 }
 
 .rdrMonthAndYearPickers select {
-  color: #1a202c;
+  background-color: transparent;
+  color: #374151;
+  font-weight: 600;
 }
 
-.rdrMonth {
-  padding: 0 0.5rem 0.5rem;
-}
-
-/* Дни от седмицата */
-.rdrWeekDay {
-  color: #64748b;
+.rdrMonthPicker,
+.rdrYearPicker {
+  margin: 0 5px;
   font-weight: 500;
 }
 
-/* Дни */
+.rdrPprevButton,
+.rdrNextButton {
+  background: transparent;
+  border-radius: 0.25rem;
+  padding: 4px;
+}
+
+.rdrPprevButton i,
+.rdrNextButton i {
+  border-color: #667eea !important;
+}
+
+.rdrWeekDays {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
+.rdrWeekDay {
+  color: #6b7280;
+  font-weight: 500;
+  text-align: center;
+  font-size: 0.85em;
+  padding: 0.5rem 0;
+}
+
+.rdrDays {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .rdrDay {
-  color: #1a202c;
+  background: transparent;
+  border: 0;
+  color: #1f2937;
+  outline: none;
+}
+
+.rdrDayNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  outline: none;
+}
+
+@media (max-width: 480px) {
+  .rdrDayNumber {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .rdrDayNumber span {
-  color: #1e293b;
+  color: #1f2937;
+  font-weight: 400;
 }
 
-.rdrDayDisabled {
-  background-color: #f8fafc;
+.rdrStartEdge,
+.rdrEndEdge,
+.rdrInRange {
+  background: #c7d2fe;
+  color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
-.rdrDayDisabled .rdrDayNumber span {
-  color: #a0aec0;
+.rdrStartEdge {
+  border-top-left-radius: 1.042em;
+  border-bottom-left-radius: 1.042em;
+  left: 0;
+  background: #667eea;
 }
 
-.rdrDayPassive .rdrDayNumber span {
-  color: #cbd5e0;
+.rdrEndEdge {
+  border-top-right-radius: 1.042em;
+  border-bottom-right-radius: 1.042em;
+  right: 0;
+  background: #667eea;
 }
 
-/* Избрани дати */
+.rdrInRange {
+  background: #c7d2fe;
+}
+
+.rdrDayStartOfMonth .rdrInRange,
+.rdrDayStartOfWeek .rdrInRange {
+  border-top-left-radius: 1.042em;
+  border-bottom-left-radius: 1.042em;
+  left: 0;
+}
+
+.rdrDayEndOfMonth .rdrInRange,
+.rdrDayEndOfWeek .rdrInRange {
+  border-top-right-radius: 1.042em;
+  border-bottom-right-radius: 1.042em;
+  right: 0;
+}
+
 .rdrDayToday .rdrDayNumber span:after {
   background: #667eea;
 }
 
-.rdrSelected, 
-.rdrInRange, 
-.rdrStartEdge, 
-.rdrEndEdge {
-  background: #667eea;
-  color: white;
+.rdrDayHovered .rdrDayNumber span {
+  text-decoration: underline;
 }
 
-.rdrInRange {
-  background: rgba(102, 126, 234, 0.2) !important;
-}
-
-.rdrStartEdge, 
-.rdrEndEdge {
-  background: #667eea !important;
-  color: #ffffff !important;
-}
-
-.rdrDayStartPreview, 
-.rdrDayInPreview, 
-.rdrDayEndPreview {
-  border: 2px solid #667eea;
+.rdrDayStartPreview,
+.rdrDayEndPreview,
+.rdrDayInPreview {
+  background: rgba(102, 126, 234, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /* Навигационни бутони */
@@ -148,22 +230,70 @@
 }
 
 /* Responsive дизайн */
-@media (max-width: 768px) {
-  .date-range-container {
-    padding: 0.5rem;
+@media (max-width: 767px) {
+  .rdrCalendarWrapper {
+    font-size: 0.85rem;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   
-  .rdrCalendarWrapper {
-    font-size: 14px;
+  .date-picker-responsive {
+    width: 100% !important;
   }
 }
 
 @media (max-width: 480px) {
   .rdrCalendarWrapper {
-    font-size: 13px;
+    font-size: 0.8rem;
   }
   
-  .rdrDay {
-    height: 30px;
+  .rdrMonth {
+    width: 100% !important;
+    padding: 0.5rem !important;
+  }
+}
+
+/* Mobile-specific date range picker adjustments */
+@media (max-width: 640px) {
+  .rdrCalendarWrapper {
+    width: 100%;
+  }
+
+  .rdrMonth {
+    width: 100% !important;
+  }
+  
+  .rdrMonthName {
+    text-align: center;
+    font-size: 14px;
+    padding: 5px 0;
+  }
+  
+  .date-picker-responsive {
+    max-width: 100%;
+  }
+  
+  .rdrDateDisplay {
+    margin: 0.5rem;
+  }
+  
+  .rdrDateDisplayItem {
+    padding: 0 5px;
+  }
+}
+
+/* Handle super small screens */
+@media (max-width: 360px) {
+  .rdrCalendarWrapper {
+    font-size: 0.75rem;
+  }
+  
+  .rdrDayNumber {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .rdrWeekDay {
+    font-size: 0.7em;
   }
 } 
