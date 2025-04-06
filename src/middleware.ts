@@ -5,17 +5,17 @@ export function middleware(request: NextRequest) {
     try {
         const path = request.nextUrl.pathname
         const token = request.cookies.get('token')?.value
-        console.error('DEBUG:', {  // използваме console.error вместо console.log
+        console.error('DEBUG:', {  
             path,
             hasToken: !!token,
             cookies: request.cookies.getAll()
         });
 
-        // Защитени рутове - само за админи
+       
         const adminPaths = ['/users', '/reservations']
         const isAdminPath = adminPaths.some(pp => path.startsWith(pp))
 
-        // Защитени рутове - за регистрирани потребители
+        
         const userPaths = [
             '/profile',
             '/profile/details',
@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
         ]
         const isUserPath = userPaths.some(pp => path.startsWith(pp))
 
-        // Публични рутове
+    
         const publicPaths = [
             '/',
             '/about',
@@ -39,7 +39,7 @@ export function middleware(request: NextRequest) {
         ]
         const isPublicPath = publicPaths.some(pp => path.startsWith(pp))
 
-        // Рутове за автентикация
+        
         const authPaths = ['/login', '/signup']
         const isAuthPath = authPaths.includes(path)
 
@@ -49,7 +49,7 @@ export function middleware(request: NextRequest) {
             isAuthPath
         });
 
-        // Редиректи
+        
         if ((isAdminPath || isUserPath) && !token) {
             console.log('Redirecting to login - protected route without token');
             return NextResponse.redirect(new URL('/login', request.nextUrl))

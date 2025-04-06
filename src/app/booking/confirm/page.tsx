@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { toast } from 'react-hot-toast'
-import '../../styles/confirm.css'
 
 export default function ConfirmBooking() {
   const router = useRouter()
@@ -29,21 +28,21 @@ export default function ConfirmBooking() {
     })
   }
 
-  // Получаваме детайлите за стаята
+  
   useEffect(() => {
     const fetchRoomDetails = async () => {
       try {
         const response = await fetch(`/api/rooms/${roomId}`)
         const data = await response.json()
         
-        // Проверяваме структурата на отговора
+       
         console.log('Room data:', data)
         
-        // Ако данните са в data.room или подобно поле
+        
         const roomData = data.room || data
         setRoomDetails(roomData)
         
-        // Изчисляваме броя нощувки и общата цена
+        
         if (startDate && endDate && roomData.price) {
           const start = new Date(startDate)
           const end = new Date(endDate)
@@ -83,7 +82,7 @@ export default function ConfirmBooking() {
       })
 
       if (response.ok) {
-        // Изпращаме потвърждение по имейл
+      
         await fetch('/api/booking/send-confirmation', {
           method: 'POST',
           headers: {

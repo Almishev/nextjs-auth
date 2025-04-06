@@ -1,203 +1,199 @@
+import Image from 'next/image';
+
 export default function AboutPage() {
   return (
-    <div style={{ background: '#f8fafc' }}>
+    <div className="bg-gray-50">
       {/* Hero Section */}
-      <section 
-        className="hero-section" 
-        style={{
-          marginBottom: '30px', 
-          height: '250px', 
-          background: 'black'
-                }}
-      >
-        <div className="hero-content">
-          <h1 className="hero-title" style={{ color: '#f8fafc' }}>About Us</h1>
-          <p className="hero-subtitle" style={{ color: '#e2e8f0' }}>Discover our story of luxury and excellence</p>
+      <section className="h-[350px] bg-black/60 bg-[url('/images/gallery5.jpg')] bg-no-repeat bg-center bg-cover bg-blend-overlay flex items-center justify-center text-center mb-8">
+        <div className="max-w-3xl px-5 animate-fadeIn">
+          <h1 className="text-5xl font-bold mb-2 text-white">За Нас</h1>
+          <p className="text-xl text-gray-200">Открийте нашата история на лукс и съвършенство</p>
         </div>
       </section>
 
-      <div className="max-w-6xl mx-auto px-4 py-8" style={{marginLeft:'40px'}}>
-        <div style={{ display: 'flex', gap: '2rem' }}>
-          {/* Left Side - Content */}
-          <div style={{ flex: '0 0 60%' }}>
-            <h2 style={{ 
-              fontSize: '1.75rem', 
-              marginBottom: '1rem',
-              color: '#1e293b',
-              fontWeight: '600'
-            }}>
-              Our Story
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Лява част - Съдържание */}
+          <div className="lg:w-3/5 animate-fadeInUp">
+            <h2 className="text-3xl font-semibold mb-6 text-gray-800 inline-block border-b-2 border-indigo-400 pb-2">
+              Нашата история
             </h2>
-            <p style={{ 
-              color: '#475569',
-              marginBottom: '1.5rem',
-              lineHeight: '1.6'
-            }}>
-              Founded in 2010, Luxury Stay has been providing exceptional hospitality services for over a decade. 
-              Our commitment to excellence and attention to detail has made us one of the most prestigious hotels in the region.
+            
+            <div className="mb-8 relative overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/images/gallery1.jpg"
+                alt="Хотел Луксозен Престой"
+                width={800}
+                height={400}
+                className="w-full h-[300px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <p className="text-white p-6 text-lg font-light italic">
+                  "Луксозен и комфортен отдих в сърцето на града"
+                </p>
+              </div>
+            </div>
+            
+            <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+              Основан през 2010 г., Луксозен Престой предоставя изключителни хотелски услуги вече над десетилетие.
+              Нашият ангажимент към съвършенството и внимание към детайла ни превърнаха в един от най-престижните хотели в региона.
             </p>
 
-            <div style={{ 
-              background: '#fff',
-              padding: '1.5rem',
-              borderRadius: '0.5rem',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              marginBottom: '1.5rem'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.25rem', 
-                marginBottom: '1rem',
-                color: '#1e293b',
-                fontWeight: '600'
-              }}>
-                Our Values
+            <div className="bg-white p-8 rounded-lg shadow-sm mb-8 transform transition-all duration-300 hover:shadow-md">
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800 inline-block border-b-2 border-indigo-400 pb-2">
+                Нашите ценности
               </h3>
-              <ul style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(2, 1fr)', 
-                gap: '0.75rem' 
-              }}>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  'Excellence in Service',
-                  'Attention to Detail',
-                  'Customer Satisfaction',
-                  'Sustainable Practices',
-                  'Innovation',
-                  'Community Engagement'
+                  'Съвършенство в обслужването',
+                  'Внимание към детайла',
+                  'Удовлетвореност на клиентите',
+                  'Устойчиви практики',
+                  'Иновации',
+                  'Ангажираност към общността'
                 ].map((value) => (
-                  <li key={value} style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '0.5rem'
-                  }}>
-                    <span style={{ color: '#0ea5e9' }}>•</span>
-                    <span style={{ color: '#475569' }}>{value}</span>
+                  <li key={value} className="flex items-center gap-3 group">
+                    <span className="text-indigo-500 transition-transform duration-300 group-hover:scale-125">•</span>
+                    <span className="text-gray-600 transition-colors duration-300 group-hover:text-indigo-700">{value}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ 
-                fontSize: '1.25rem', 
-                marginBottom: '1rem',
-                color: '#1e293b',
-                fontWeight: '600'
-              }}>
-                Why Choose Us
+            <div className="mb-8 transform transition-all duration-300 hover:translate-x-2">
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800 inline-block border-b-2 border-indigo-400 pb-2">
+                Защо да изберете нас
               </h3>
-              <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  'Prime Location',
-                  'Luxury Amenities',
-                  'Professional Staff',
-                  'Fine Dining',
-                  'Spa & Wellness',
-                  'Event Spaces'
+                  'Превъзходна локация',
+                  'Луксозни удобства',
+                  'Професионален персонал',
+                  'Гурме кухня',
+                  'СПА и уелнес',
+                  'Събитийни пространства'
                 ].map((feature) => (
-                  <li key={feature} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ color: '#3b82f6' }}>•</span>
-                    <span style={{ color: '#4b5563' }}>{feature}</span>
+                  <li key={feature} className="flex items-center gap-3 group">
+                    <span className="text-indigo-500 transition-transform duration-300 group-hover:scale-125">•</span>
+                    <span className="text-gray-600 transition-colors duration-300 group-hover:text-indigo-700">{feature}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
           
-          {/* Right Side - Stats */}
-          <div style={{ flex: '1' }}>
-            <div style={{ 
-              background: '#fff',
-              padding: '1.5rem',
-              borderRadius: '0.5rem',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              marginBottom: '1.5rem'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.25rem', 
-                marginBottom: '1rem',
-                color: '#1e293b',
-                fontWeight: '600'
-              }}>
-                Our Numbers
+          {/* Дясна част - Статистика */}
+          <div className="lg:flex-1 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+            <div className="bg-white p-8 rounded-lg shadow-lg mb-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-100 rounded-bl-full opacity-50"></div>
+              
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800 inline-block border-b-2 border-indigo-400 pb-2 relative z-10">
+                Нашите цифри
               </h3>
-              <div style={{ display: 'grid', gap: '1rem' }}>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between',
-                  padding: '1rem',
-                  background: '#f8fafc',
-                  borderRadius: '0.5rem'
-                }}>
-                  <span style={{ color: '#64748b' }}>Years of Experience</span>
-                  <span style={{ fontWeight: '600', color: '#0ea5e9' }}>13+</span>
+              
+              <div className="space-y-5 relative z-10">
+                <div className="flex justify-between p-5 bg-gray-50 rounded-lg hover:bg-indigo-50 transition-colors duration-300 transform hover:-translate-y-1">
+                  <span className="text-gray-600 font-medium">Години опит</span>
+                  <span className="font-bold text-indigo-600 text-xl">13+</span>
                 </div>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between',
-                  padding: '1rem',
-                  background: '#f8fafc',
-                  borderRadius: '0.5rem'
-                }}>
-                  <span style={{ color: '#64748b' }}>Luxury Rooms</span>
-                  <span style={{ fontWeight: '600', color: '#0ea5e9' }}>150+</span>
+                <div className="flex justify-between p-5 bg-gray-50 rounded-lg hover:bg-indigo-50 transition-colors duration-300 transform hover:-translate-y-1">
+                  <span className="text-gray-600 font-medium">Луксозни стаи</span>
+                  <span className="font-bold text-indigo-600 text-xl">150+</span>
                 </div>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between',
-                  padding: '1rem',
-                  background: '#f8fafc',
-                  borderRadius: '0.5rem'
-                }}>
-                  <span style={{ color: '#64748b' }}>Happy Guests</span>
-                  <span style={{ fontWeight: '600', color: '#0ea5e9' }}>15K+</span>
+                <div className="flex justify-between p-5 bg-gray-50 rounded-lg hover:bg-indigo-50 transition-colors duration-300 transform hover:-translate-y-1">
+                  <span className="text-gray-600 font-medium">Доволни гости</span>
+                  <span className="font-bold text-indigo-600 text-xl">15K+</span>
                 </div>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between',
-                  padding: '1rem',
-                  background: '#f8fafc',
-                  borderRadius: '0.5rem'
-                }}>
-                  <span style={{ color: '#64748b' }}>Staff Members</span>
-                  <span style={{ fontWeight: '600', color: '#0ea5e9' }}>100+</span>
+                <div className="flex justify-between p-5 bg-gray-50 rounded-lg hover:bg-indigo-50 transition-colors duration-300 transform hover:-translate-y-1">
+                  <span className="text-gray-600 font-medium">Членове на екипа</span>
+                  <span className="font-bold text-indigo-600 text-xl">100+</span>
                 </div>
               </div>
             </div>
 
-            <div style={{ 
-              background: '#fff',
-              padding: '1.5rem',
-              borderRadius: '0.5rem',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.25rem', 
-                marginBottom: '1rem',
-                color: '#1e293b',
-                fontWeight: '600'
-              }}>
-                Contact Information
+            <div className="mb-8 relative overflow-hidden rounded-lg shadow-lg">
+              <Image
+                src="/images/gallery2.jpg"
+                alt="Ресторант"
+                width={500}
+                height={300}
+                className="w-full h-[250px] object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <p className="text-white p-6 text-lg">
+                  Нашият елегантен ресторант
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-lg shadow-lg relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-24 h-24 bg-indigo-100 rounded-br-full opacity-50"></div>
+              
+              <h3 className="text-2xl font-semibold mb-6 text-gray-800 inline-block border-b-2 border-indigo-400 pb-2 relative z-10">
+                Контактна информация
               </h3>
-              <div style={{ display: 'grid', gap: '1rem' }}>
-                <div style={{ color: '#475569' }}>
-                  <strong style={{ color: '#1e293b' }}>Address:</strong><br />
-                  123 Luxury Avenue<br />
-                  City Center, 10001
+              
+              <div className="space-y-5 relative z-10">
+                <div className="text-gray-600 hover:text-indigo-700 transition-colors duration-300 transform hover:translate-x-2">
+                  <strong className="text-gray-800 block mb-1">Адрес:</strong>
+                  ул. Луксозна 123<br />
+                  Център, 10001
                 </div>
-                <div style={{ color: '#475569' }}>
-                  <strong style={{ color: '#1e293b' }}>Phone:</strong><br />
-                  +1 (555) 123-4567
+                <div className="text-gray-600 hover:text-indigo-700 transition-colors duration-300 transform hover:translate-x-2">
+                  <strong className="text-gray-800 block mb-1">Телефон:</strong>
+                  +359 (888) 123-4567
                 </div>
-                <div style={{ color: '#475569' }}>
-                  <strong style={{ color: '#1e293b' }}>Email:</strong><br />
-                  info@luxurystay.com
+                <div className="text-gray-600 hover:text-indigo-700 transition-colors duration-300 transform hover:translate-x-2">
+                  <strong className="text-gray-800 block mb-1">Имейл:</strong>
+                  info@luxhotel.bg
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Допълнителна галерия */}
+      <section className="py-16 bg-gray-900 mt-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-white animate-fadeIn">Разгледайте нашите съоръжения</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative overflow-hidden h-80 rounded-lg shadow-lg animate-fadeInUp">
+              <Image 
+                src="/images/gallery4.jpg" 
+                alt="Басейн" 
+                fill 
+                className="object-cover transition-transform duration-700 hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <h3 className="text-xl font-semibold text-white p-6">Открит басейн</h3>
+              </div>
+            </div>
+            <div className="relative overflow-hidden h-80 rounded-lg shadow-lg animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+              <Image 
+                src="/images/gallery5.jpg" 
+                alt="СПА център" 
+                fill 
+                className="object-cover transition-transform duration-700 hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <h3 className="text-xl font-semibold text-white p-6">СПА център</h3>
+              </div>
+            </div>
+            <div className="relative overflow-hidden h-80 rounded-lg shadow-lg animate-fadeInUp" style={{ animationDelay: '0.4s' }}>
+              <Image 
+                src="/images/slider1.jpg" 
+                alt="Конферентна зала" 
+                fill 
+                className="object-cover transition-transform duration-700 hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                <h3 className="text-xl font-semibold text-white p-6">Конферентна зала</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
-} 
+}

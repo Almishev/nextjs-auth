@@ -11,7 +11,8 @@ export async function sendEmail({ email, emailType, userId }: any) {
             domain: process.env.DOMAIN
         });
         
-        // create a hashed token
+        
+        
         const hashedToken = await bcryptjs.hash(userId.toString(), 10);
         console.log("Hashed token created");
 
@@ -39,7 +40,6 @@ export async function sendEmail({ email, emailType, userId }: any) {
             console.log("User updated with password reset token");
         }
 
-        // Конфигурираме транспорта
         console.log("Configuring email transport with:", {
             host: process.env.EMAIL_HOST,
             port: process.env.EMAIL_PORT,
@@ -50,14 +50,14 @@ export async function sendEmail({ email, emailType, userId }: any) {
         const transport = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
             port: Number(process.env.EMAIL_PORT),
-            secure: false, // true за 465 порт, false за други портове
+            secure: false, 
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
             }
         });
 
-        // Test SMTP connection
+        
         try {
             await transport.verify();
             console.log('SMTP connection verified successfully');
@@ -77,7 +77,7 @@ export async function sendEmail({ email, emailType, userId }: any) {
             subject: mailOptions.subject
         });
 
-        // Преди изпращане на имейла
+      
         console.log("Preparing to send email with options:", {
             from: mailOptions.from,
             to: mailOptions.to,
@@ -104,7 +104,7 @@ export const sendBookingConfirmation = async ({email, bookingDetails}: any) => {
         const transport = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
             port: Number(process.env.EMAIL_PORT),
-            secure: false, // true за 465 порт, false за други портове
+            secure: false, 
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS

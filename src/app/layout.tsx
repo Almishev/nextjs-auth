@@ -9,8 +9,8 @@ import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Luxury Stay',
-  description: 'Luxury hotel booking system',
+  title: 'Хотел Всички сезони',
+  description: 'Хотел Всички сеизони. Резервационна система',
 }
 
 export default async function RootLayout({
@@ -21,10 +21,10 @@ export default async function RootLayout({
   const userData = await getUserData();
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full">
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
         <NavBar userData={userData} />
-        <main className="main-content">
+        <main className="flex-grow max-w-7xl mx-auto px-4 pt-20 pb-8 w-full">
           {children}
         </main>
         <Footer />

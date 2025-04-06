@@ -15,10 +15,10 @@ export default function ForgotPasswordPage() {
         try {
             setLoading(true);
             const response = await axios.post("/api/users/forgotpassword", { email });
-            toast.success("Reset password link sent to your email!");
+            toast.success("Линк за нулиране на паролата е изпратен на имейла ви!");
             router.push("/login");
         } catch (error: any) {
-            toast.error(error.response?.data?.error || "Something went wrong");
+            toast.error(error.response?.data?.error || "Нещо се обърка");
         } finally {
             setLoading(false);
         }
@@ -27,17 +27,17 @@ export default function ForgotPasswordPage() {
     return (
         <div className="center">
             <div className="form-container">
-                <h1 className="title">Reset Password</h1>
+                <h1 className="title">Нулиране на парола</h1>
                 
                 <form onSubmit={onSubmit}>
-                    <label className="label" htmlFor="email">Email</label>
+                    <label className="label" htmlFor="email">Имейл</label>
                     <input 
                         className="input-field"
                         id="email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
+                        placeholder="Въведете вашия имейл"
                         required
                     />
 
@@ -46,14 +46,14 @@ export default function ForgotPasswordPage() {
                         className="button"
                         disabled={loading || !email}
                     >
-                        {loading ? "Sending..." : "Send Reset Link"}
+                        {loading ? "Изпращане..." : "Изпрати линк за нулиране"}
                     </button>
                 </form>
 
                 <Link href="/login" className="link">
-                    Back to Login
+                    Обратно към вход
                 </Link>
             </div>
         </div>
     );
-} 
+}

@@ -1,15 +1,15 @@
 export function getBaseUrl() {
-  // Always use absolute URLs in SSR
+  
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
   
-  // Check if we're in development
+  
   if (process.env.NODE_ENV === 'development') {
     return 'http://localhost:3000';
   }
 
-  // Fallback to relative URL
+  
   return '';
 }
 

@@ -16,13 +16,13 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   
   if (!room) {
     return {
-      title: 'Room Not Found',
-      description: 'The requested room could not be found'
+      title: 'Стаята не е намерена',
+      description: 'Заявената стая не може да бъде намерена'
     }
   }
 
   return {
-    title: `${room.name} - Luxury Stay`,
+    title: `${room.name} - Хотел Четири сезона`,
     description: room.description
   }
 }
@@ -32,124 +32,79 @@ export default async function RoomPage({ params }: { params: { id: string } }) {
   if (!room) return notFound();
 
   return (
-    <div style={{ background: '#f8fafc' }}>
+    <div className="bg-gray-50">
       {/* Hero Section */}
-      <section 
-        className="hero-section rooms-hero" 
-        style={{
-          marginBottom: '30px', 
-          height: '250px', 
-          background: 'linear-gradient(rgba(30, 41, 59, 0.7), rgba(30, 41, 59, 0.8))'
-        }}
-      >
-        <div className="hero-content">
-          <h1 className="hero-title" style={{ color: '#f8fafc' }}>{room.name}</h1>
-          <p className="hero-subtitle" style={{ color: '#e2e8f0' }}>Experience luxury and comfort</p>
+      <section className="h-[250px] bg-gray-800/70 flex items-center justify-center text-center mb-8">
+        <div className="max-w-3xl px-5">
+          <h1 className="text-4xl font-bold mb-2 text-gray-50">{room.name}</h1>
+          <p className="text-xl text-gray-200">Изживейте лукс и комфорт</p>
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <div style={{ display: 'flex', gap: '2rem' }}>
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Side - Image */}
-          <div style={{ flex: '0 0 40%' }}>
-            <div className="featured-room">
-              <div className="room-image-container">
-                <Image
-                  src={room.image}
-                  alt={room.name}
-                  fill
-                  className="room-image"
-                  priority
-                />
-              </div>
+          <div className="lg:w-2/5">
+            <div className="relative h-80 lg:h-96 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src={room.image}
+                alt={room.name}
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
           
           {/* Right Side - Room Details */}
-          <div style={{ flex: '1' }}>
-            <h2 style={{ 
-              fontSize: '1.75rem', 
-              marginBottom: '1rem',
-              color: '#1e293b',
-              fontWeight: '600'
-            }}>
-              Room Details
+          <div className="flex-1">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+              Детайли за стаята
             </h2>
-            <p style={{ 
-              color: '#475569',
-              marginBottom: '1.5rem',
-              lineHeight: '1.6'
-            }}>
+            <p className="text-gray-600 mb-6 leading-relaxed">
               {room.description}
             </p>
             
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ 
-                display: 'flex', 
-                gap: '0.5rem', 
-                marginBottom: '0.5rem',
-                background: '#fff',
-                padding: '1rem',
-                borderRadius: '0.5rem',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-              }}>
-                <span style={{ color: '#64748b' }}>Size:</span>
-                <span style={{ fontWeight: '600', color: '#334155' }}>{room.size}m²</span>
+            <div className="mb-6 space-y-3">
+              <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow-sm">
+                <span className="text-gray-500">Размер:</span>
+                <span className="font-semibold text-gray-700">{room.size}m²</span>
               </div>
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <span style={{ color: '#666' }}>Capacity:</span>
-                <span style={{ fontWeight: '600' }}>{room.capacity} persons</span>
+              <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow-sm">
+                <span className="text-gray-500">Капацитет:</span>
+                <span className="font-semibold text-gray-700">{room.capacity} души</span>
               </div>
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <span style={{ color: '#666' }}>Price:</span>
-                <span style={{ fontWeight: '600' }}>${room.price}/night</span>
+              <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow-sm">
+                <span className="text-gray-500">Цена:</span>
+                <span className="font-semibold text-gray-700">${room.price}/нощувка</span>
               </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <span style={{ color: '#666' }}>Status:</span>
-                <span style={{ fontWeight: '600', color: '#22c55e' }}>Available</span>
+              <div className="flex items-center gap-2 bg-white p-4 rounded-lg shadow-sm">
+                <span className="text-gray-500">Статус:</span>
+                <span className="font-semibold text-green-600">Свободна</span>
               </div>
             </div>
 
-            <div style={{ 
-              background: '#fff',
-              padding: '1.5rem',
-              borderRadius: '0.5rem',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              marginBottom: '1.5rem'
-            }}>
-              <h3 style={{ 
-                fontSize: '1.25rem', 
-                marginBottom: '1rem',
-                color: '#1e293b',
-                fontWeight: '600'
-              }}>
-                Amenities
+            <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                Удобства
               </h3>
-              <ul style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(2, 1fr)', 
-                gap: '0.75rem' 
-              }}>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {room.amenities.map((amenity) => (
-                  <li key={amenity} style={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    gap: '0.5rem'
-                  }}>
-                    <span style={{ color: '#0ea5e9' }}>•</span>
-                    <span style={{ color: '#475569' }}>{amenity}</span>
+                  <li key={amenity} className="flex items-center gap-2">
+                    <span className="text-blue-500">•</span>
+                    <span className="text-gray-600">{amenity}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem' }}>Features</h3>
-              <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Характеристики</h3>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {room.features.map((feature) => (
-                  <li key={feature} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ color: '#3b82f6' }}>•</span>
-                    <span style={{ color: '#4b5563' }}>{feature}</span>
+                  <li key={feature} className="flex items-center gap-2">
+                    <span className="text-blue-500">•</span>
+                    <span className="text-gray-600">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -157,26 +112,13 @@ export default async function RoomPage({ params }: { params: { id: string } }) {
 
             <Link 
               href="/booking" 
-              style={{
-                display: 'inline-block',
-                width: '100%',
-                padding: '1rem 2rem',
-                textAlign: 'center',
-                background: 'linear-gradient(to right, #0ea5e9, #0284c7)',
-                color: 'white',
-                fontWeight: '600',
-                borderRadius: '0.75rem',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 6px rgba(14, 165, 233, 0.2)',
-                border: 'none',
-                cursor: 'pointer'
-              }}
+              className="block w-full py-4 px-6 text-center bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg transition-all hover:-translate-y-1 hover:shadow-lg"
             >
-              Book Now
+              Резервирайте сега
             </Link>
           </div>
         </div>
       </div>
     </div>
   )
-} 
+}
